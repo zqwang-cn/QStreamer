@@ -1,0 +1,115 @@
+{
+    "Plus": {
+        "type": "Plus",
+        "properties": [],
+        "in_pads": {
+            "in1": {
+                "type": "float",
+                "size": 1
+            },
+            "in2": {
+                "type": "float",
+                "size": 1
+            }
+        },
+        "out_pads": {
+            "out1": {
+                "type": "float",
+                "size": 1
+            }
+        }
+    },
+    "Minus": {
+        "type": "Minus",
+        "properties": [],
+        "in_pads": {
+            "in1": {
+                "type": "float",
+                "size": 1
+            },
+            "in2": {
+                "type": "float",
+                "size": 1
+            }
+        },
+        "out_pads": {
+            "out1": {
+                "type": "float",
+                "size": 1
+            }
+        }
+    },
+    "Multiply": {
+        "type": "Multiply",
+        "properties": [],
+        "in_pads": {
+            "in1": {
+                "type": "float",
+                "size": 1
+            },
+            "in2": {
+                "type": "float",
+                "size": 1
+            }
+        },
+        "out_pads": {
+            "out1": {
+                "type": "float",
+                "size": 1
+            }
+        }
+    },
+    "Divide": {
+        "type": "Divide",
+        "properties": [],
+        "in_pads": {
+            "in1": {
+                "type": "float",
+                "size": 1
+            },
+            "in2": {
+                "type": "float",
+                "size": 1
+            }
+        },
+        "out_pads": {
+            "out1": {
+                "type": "float",
+                "size": 1
+            }
+        }
+    },
+    "Input": {
+        "type": "Input",
+        "properties": [
+            {
+                "name": "value",
+                "type": "float",
+                "value": "0"
+            },
+            {
+                "name": "test",
+                "type": "float",
+                "value": "0"
+            }
+        ],
+        "in_pads": {},
+        "out_pads": {
+            "out1": {
+                "type": "float",
+                "size": 1
+            }
+        }
+    },
+    "Output": {
+        "type": "Output",
+        "properties": [],
+        "in_pads": {
+            "in1": {
+                "type": "float",
+                "size": 1
+            }
+        },
+        "out_pads": {}
+    }
+}

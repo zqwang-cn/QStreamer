@@ -1,0 +1,111 @@
+{
+    "elements": {
+        "a": {
+            "type": "Input",
+            "properties": [
+                {
+                    "name": "value",
+                    "type": "float",
+                    "value": "3"
+                },
+                {
+                    "name": "test",
+                    "type": "float",
+                    "value": "0"
+                }
+            ],
+            "in_pads": {},
+            "out_pads": {
+                "out1": {
+                    "type": "float",
+                    "size": 1
+                }
+            }
+        },
+        "b": {
+            "type": "Input",
+            "properties": [
+                {
+                    "name": "value",
+                    "type": "float",
+                    "value": "5"
+                },
+                {
+                    "name": "test",
+                    "type": "float",
+                    "value": "0"
+                }
+            ],
+            "in_pads": {},
+            "out_pads": {
+                "out1": {
+                    "type": "float",
+                    "size": 1
+                }
+            }
+        },
+        "c": {
+            "type": "Multiply",
+            "properties": [],
+            "in_pads": {
+                "in1": {
+                    "type": "float",
+                    "size": 1
+                },
+                "in2": {
+                    "type": "float",
+                    "size": 1
+                }
+            },
+            "out_pads": {
+                "out1": {
+                    "type": "float",
+                    "size": 1
+                }
+            }
+        },
+        "d": {
+            "type": "Output",
+            "properties": [],
+            "in_pads": {
+                "in1": {
+                    "type": "float",
+                    "size": 1
+                }
+            },
+            "out_pads": {}
+        }
+    },
+    "links": [
+        {
+            "from": {
+                "element_name": "a",
+                "pad_name": "out1"
+            },
+            "to": {
+                "element_name": "c",
+                "pad_name": "in1"
+            }
+        },
+        {
+            "from": {
+                "element_name": "b",
+                "pad_name": "out1"
+            },
+            "to": {
+                "element_name": "c",
+                "pad_name": "in2"
+            }
+        },
+        {
+            "from": {
+                "element_name": "c",
+                "pad_name": "out1"
+            },
+            "to": {
+                "element_name": "d",
+                "pad_name": "in1"
+            }
+        }
+    ]
+}
