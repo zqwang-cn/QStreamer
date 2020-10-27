@@ -7,11 +7,13 @@ public:
     Pipeline(Json::Value config);
     void init();
     void run();
+    void stop();
     void element_ready(Element* element);
 
 private:
+    bool _quit = false;
     std::map<std::string, Element*> _elements;
+    std::vector<Element*> _input_elements;
     std::queue<Element*> _ready_elements;
     Element* find_element(std::string name);
-    void link(Json::Value config);
 };

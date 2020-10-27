@@ -26,29 +26,42 @@ Pipeline::Pipeline(Json::Value config)
         auto link = from_ele->find_out_pad(from_pad_name);
         to_ele->add_in_pad(to_pad_name, link);
     }
+
+    for (auto iter = _elements.begin(); iter != _elements.end(); iter++)
+    {
+        auto element = iter->second;
+        if (element->n_in_pads() == 0)
+            _input_elements.push_back(element);
+    }
 }
 
 void Pipeline::init()
 {
     for (auto iter = _elements.begin(); iter != _elements.end(); iter++)
-    {
-        auto element = iter->second;
-        element->init();
-        if (element->n_in_pads() == 0)
-            _ready_elements.push(element);
-    }
+        iter->second->init();
 }
 
 void Pipeline::run()
 {
-    while (_ready_elements.size() > 0)
+    while (!_quit)
     {
-        auto element = _ready_elements.front();
-        element->process();
-        element->notify();
-        element->unready();
-        _ready_elements.pop();
+        for (auto iter = _input_elements.begin(); iter != _input_elements.end(); iter++)
+            _ready_elements.push(*iter);
+
+        while (_ready_elements.size() > 0)
+        {
+            auto element = _ready_elements.front();
+            element->process();
+            element->notify();
+            element->unready();
+            _ready_elements.pop();
+        }
     }
+}
+
+void Pipeline::stop()
+{
+    _quit = true;
 }
 
 void Pipeline::element_ready(Element* element)
