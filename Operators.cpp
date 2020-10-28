@@ -12,6 +12,10 @@ void Plus::process()
     *out1 = *in1 + *in2;
 }
 
+void Plus::finalize()
+{
+}
+
 void Minus::init()
 {
     in1 = (float*)find_in_pad("in1")->get_buffer().get();
@@ -22,6 +26,10 @@ void Minus::init()
 void Minus::process()
 {
     *out1 = *in1 - *in2;
+}
+
+void Minus::finalize()
+{
 }
 
 void Multiply::init()
@@ -36,6 +44,10 @@ void Multiply::process()
     *out1 = *in1 * *in2;
 }
 
+void Multiply::finalize()
+{
+}
+
 void Divide::init()
 {
     in1 = (float*)find_in_pad("in1")->get_buffer().get();
@@ -46,4 +58,8 @@ void Divide::init()
 void Divide::process()
 {
     *out1 = *in1 / *in2;
+}
+
+void Divide::finalize()
+{
 }

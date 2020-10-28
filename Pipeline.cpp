@@ -64,6 +64,12 @@ void Pipeline::stop()
     _quit = true;
 }
 
+void Pipeline::finalize()
+{
+    for (auto iter = _elements.begin(); iter != _elements.end(); iter++)
+        iter->second->finalize();
+}
+
 void Pipeline::element_ready(Element* element)
 {
     _ready_elements.push(element);

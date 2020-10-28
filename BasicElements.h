@@ -6,6 +6,7 @@ class Input : public Element
 public:
     virtual void init();
     virtual void process();
+    virtual void finalize();
 
 private:
     float* out1;
@@ -17,6 +18,7 @@ class Output : public Element
 public:
     virtual void init();
     virtual void process();
+    virtual void finalize();
 
 private:
     float* in1;

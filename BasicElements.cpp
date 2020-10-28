@@ -11,6 +11,10 @@ void Input::process()
     *out1 = value;
 }
 
+void Input::finalize()
+{
+}
+
 void Output::init()
 {
     in1 = (float*)find_in_pad("in1")->get_buffer().get();
@@ -19,4 +23,8 @@ void Output::init()
 void Output::process()
 {
     printf("%f\n", *in1);
+}
+
+void Output::finalize()
+{
 }

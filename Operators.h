@@ -6,6 +6,7 @@ class Plus : public Element
 public:
     virtual void init();
     virtual void process();
+    virtual void finalize();
 
 private:
     float* in1;
@@ -18,6 +19,7 @@ class Minus : public Element
 public:
     virtual void init();
     virtual void process();
+    virtual void finalize();
 
 private:
     float* in1;
@@ -30,6 +32,7 @@ class Multiply : public Element
 public:
     virtual void init();
     virtual void process();
+    virtual void finalize();
 
 private:
     float* in1;
@@ -42,6 +45,7 @@ class Divide : public Element
 public:
     virtual void init();
     virtual void process();
+    virtual void finalize();
 
 private:
     float* in1;

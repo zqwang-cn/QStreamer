@@ -24,6 +24,7 @@ public:
 
     virtual void init() = 0;
     virtual void process() = 0;
+    virtual void finalize() = 0;
 
 private:
     std::map<std::string, Link*> _in_pads;

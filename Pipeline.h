@@ -8,6 +8,7 @@ public:
     void init();
     void run();
     void stop();
+    void finalize();
     void element_ready(Element* element);
 
 private:
