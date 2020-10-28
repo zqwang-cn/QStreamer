@@ -7,7 +7,6 @@ Pipeline* p;
 void quit(int s)
 {
     p->stop();
-    p->finalize();
 }
 
 int main(int argc, char* argv[])
@@ -20,4 +19,5 @@ int main(int argc, char* argv[])
     p = new Pipeline(config);
     p->init();
     p->run();
+    p->finalize();
 }

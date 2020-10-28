@@ -1,48 +1,126 @@
 {
     "elements": {
-        "a": {
+        "inp": {
             "type": "VideoReader",
             "properties": [
                 {
                     "name": "uri",
                     "type": "string",
-                    "value": "file:///home/wang/code/face_recognition/test.mp4"
+                    "value": "/home/wang/code/face_recognition/test.mp4"
                 }
             ],
             "in_pads": {},
             "out_pads": {
                 "out": {
-                    "type": "Mat",
-                    "size": 1
+                    "image": {
+                        "type": "Mat",
+                        "size": 1
+                    }
                 }
             }
         },
-        "b": {
+        "out": {
             "type": "ImageDisplayer",
             "properties": [
                 {
                     "name": "title",
                     "type": "string",
-                    "value": "xxx"
+                    "value": "abcd"
                 }
             ],
             "in_pads": {
                 "in": {
-                    "type": "Mat",
-                    "size": 1
+                    "image": {
+                        "type": "Mat",
+                        "size": 1
+                    }
                 }
             },
             "out_pads": {}
+        },
+        "retina": {
+            "type": "RetinaFaceDetectorElement",
+            "properties": [
+                {
+                    "name": "config_file",
+                    "type": "string",
+                    "value": "/home/wang/code/face_recognition/config/retina_face_detector/config.json"
+                }
+            ],
+            "in_pads": {
+                "in": {
+                    "image": {
+                        "type": "Mat",
+                        "size": 1
+                    }
+                }
+            },
+            "out_pads": {
+                "out": {
+                    "image": {
+                        "type": "Mat",
+                        "size": 1
+                    },
+                    "det_results": {
+                        "type": "std::vector<DetectorResult>",
+                        "size": 1
+                    }
+                }
+            }
+        },
+        "render": {
+            "type": "ResultRenderer",
+            "properties": [],
+            "in_pads": {
+                "in": {
+                    "image": {
+                        "type": "Mat",
+                        "size": 1
+                    },
+                    "det_results": {
+                        "type": "std::vector<DetectorResult>",
+                        "size": 1
+                    }
+                }
+            },
+            "out_pads": {
+                "out": {
+                    "image": {
+                        "type": "Mat",
+                        "size": 1
+                    }
+                }
+            }
         }
     },
     "links": [
         {
             "from": {
-                "element_name": "a",
+                "element_name": "inp",
                 "pad_name": "out"
             },
             "to": {
-                "element_name": "b",
+                "element_name": "retina",
+                "pad_name": "in"
+            }
+        },
+        {
+            "from": {
+                "element_name": "retina",
+                "pad_name": "out"
+            },
+            "to": {
+                "element_name": "render",
+                "pad_name": "in"
+            }
+        },
+        {
+            "from": {
+                "element_name": "render",
+                "pad_name": "out"
+            },
+            "to": {
+                "element_name": "out",
                 "pad_name": "in"
             }
         }

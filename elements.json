@@ -11,7 +11,7 @@
         "in_pads": {},
         "out_pads": {
             "out": {
-                "frame": {
+                "image": {
                     "type": "Mat",
                     "size": 1
                 }
@@ -29,12 +29,66 @@
         ],
         "in_pads": {
             "in": {
-                "frame": {
+                "image": {
                     "type": "Mat",
                     "size": 1
                 }
             }
         },
         "out_pads": {}
+    },
+    "RetinaFaceDetectorElement": {
+        "type": "RetinaFaceDetectorElement",
+        "properties": [
+            {
+                "name": "config_file",
+                "type": "string",
+                "value": "/home/wang/code/face_recognition/config/retina_face_detector/config.json"
+            }
+        ],
+        "in_pads": {
+            "in": {
+                "image": {
+                    "type": "Mat",
+                    "size": 1
+                }
+            }
+        },
+        "out_pads": {
+            "out": {
+                "image": {
+                    "type": "Mat",
+                    "size": 1
+                },
+                "det_results": {
+                    "type": "std::vector<DetectorResult>",
+                    "size": 1
+                }
+            }
+        }
+    },
+    "ResultRenderer": {
+        "type": "ResultRenderer",
+        "properties": [],
+        "in_pads": {
+            "in": {
+                "image": {
+                    "type": "Mat",
+                    "size": 1
+                },
+                "det_results": {
+                    "type": "std::vector<DetectorResult>",
+                    "size": 1
+                }
+            }
+        },
+        "out_pads": {
+            "out": {
+                "image": {
+                    "type": "Mat",
+                    "size": 1
+                }
+            }
+        }
     }
 }

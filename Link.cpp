@@ -1,5 +1,6 @@
 #include "Link.h"
 #include "Element.h"
+#include "RetinaFaceDetector.h"
 #include <assert.h>
 #include <opencv2/opencv.hpp>
 
@@ -16,6 +17,8 @@ Link* Link::create_link(Json::Value config)
             buffer = new float[size];
         else if (type == "Mat")
             buffer = new cv::Mat[size];
+        else if (type == "std::vector<DetectorResult>")
+            buffer = new std::vector<DetectorResult>();
         else
             assert(false);
         link->add_buffer(name, buffer);
