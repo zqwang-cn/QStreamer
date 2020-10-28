@@ -1,112 +1,33 @@
 {
-    "Plus": {
-        "type": "Plus",
-        "properties": [],
-        "in_pads": {
-            "in1": {
-                "type": "float",
-                "size": 1
-            },
-            "in2": {
-                "type": "float",
-                "size": 1
-            }
-        },
-        "out_pads": {
-            "out1": {
-                "type": "float",
-                "size": 1
-            }
-        }
-    },
-    "Minus": {
-        "type": "Minus",
-        "properties": [],
-        "in_pads": {
-            "in1": {
-                "type": "float",
-                "size": 1
-            },
-            "in2": {
-                "type": "float",
-                "size": 1
-            }
-        },
-        "out_pads": {
-            "out1": {
-                "type": "float",
-                "size": 1
-            }
-        }
-    },
-    "Multiply": {
-        "type": "Multiply",
-        "properties": [],
-        "in_pads": {
-            "in1": {
-                "type": "float",
-                "size": 1
-            },
-            "in2": {
-                "type": "float",
-                "size": 1
-            }
-        },
-        "out_pads": {
-            "out1": {
-                "type": "float",
-                "size": 1
-            }
-        }
-    },
-    "Divide": {
-        "type": "Divide",
-        "properties": [],
-        "in_pads": {
-            "in1": {
-                "type": "float",
-                "size": 1
-            },
-            "in2": {
-                "type": "float",
-                "size": 1
-            }
-        },
-        "out_pads": {
-            "out1": {
-                "type": "float",
-                "size": 1
-            }
-        }
-    },
-    "Input": {
-        "type": "Input",
+    "VideoReader": {
+        "type": "VideoReader",
         "properties": [
             {
-                "name": "value",
-                "type": "float",
-                "value": "0"
-            },
-            {
-                "name": "test",
-                "type": "float",
-                "value": "0"
+                "name": "uri",
+                "type": "string",
+                "value": ""
             }
         ],
         "in_pads": {},
         "out_pads": {
-            "out1": {
-                "type": "float",
+            "out": {
+                "type": "Mat",
                 "size": 1
             }
         }
     },
-    "Output": {
-        "type": "Output",
-        "properties": [],
+    "ImageDisplayer": {
+        "type": "ImageDisplayer",
+        "properties": [
+            {
+                "name": "title",
+                "type": "string",
+                "value": "image"
+            }
+        ],
         "in_pads": {
-            "in1": {
-                "type": "float",
+            "in": {
+                "type": "Mat",
                 "size": 1
             }
         },

@@ -1,6 +1,7 @@
 #include "Link.h"
 #include "Element.h"
 #include <assert.h>
+#include <opencv2/opencv.hpp>
 
 Link* Link::create_link(Json::Value config)
 {
@@ -9,6 +10,8 @@ Link* Link::create_link(Json::Value config)
     char* buffer;
     if (type == "float")
         buffer = (char*)(new float[size]);
+    else if (type == "Mat")
+        buffer = (char*)(new cv::Mat[size]);
     else
         assert(false);
 

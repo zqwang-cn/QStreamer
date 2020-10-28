@@ -1,7 +1,8 @@
 #pragma once
 #include "Element.h"
+#include <opencv2/opencv.hpp>
 
-class Input : public Element
+class VideoReader : public Element
 {
 public:
     virtual void init();
@@ -9,11 +10,12 @@ public:
     virtual void finalize();
 
 private:
-    float* out1;
-    float value;
+    cv::Mat* out;
+    std::string uri;
+    cv::VideoCapture cap;
 };
 
-class Output : public Element
+class ImageDisplayer : public Element
 {
 public:
     virtual void init();
@@ -21,5 +23,6 @@ public:
     virtual void finalize();
 
 private:
-    float* in1;
+    cv::Mat* in;
+    std::string title;
 };

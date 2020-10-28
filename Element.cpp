@@ -1,24 +1,15 @@
 #include "Element.h"
-#include "BasicElements.h"
-#include "Operators.h"
 #include "Pipeline.h"
+#include "VideoIOElements.h"
 #include <assert.h>
 #include <iostream>
 
 Element* Element::new_element(std::string type)
 {
-    if (type == "Input")
-        return new Input();
-    else if (type == "Output")
-        return new Output();
-    else if (type == "Plus")
-        return new Plus();
-    else if (type == "Minus")
-        return new Minus();
-    else if (type == "Multiply")
-        return new Multiply();
-    else if (type == "Divide")
-        return new Divide();
+    if (type == "VideoReader")
+        return new VideoReader();
+    else if (type == "ImageDisplayer")
+        return new ImageDisplayer();
     else
         assert(false);
 }
