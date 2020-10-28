@@ -1,5 +1,6 @@
 #pragma once
 #include "json/json.h"
+#include <map>
 
 class Element;
 
@@ -8,12 +9,13 @@ class Link
 public:
     static Link* create_link(Json::Value config);
 
-    Link(char* ptr);
     void set_to_element(Element* element);
     void notify();
-    std::shared_ptr<char> get_buffer();
+    void add_buffer(std::string name, void* buffer);
+    void* get_buffer();
+    void* get_buffer(std::string name);
 
 private:
     Element* _to_element;
-    std::shared_ptr<char> _buffer;
+    std::map<std::string, void*> _buffers;
 };

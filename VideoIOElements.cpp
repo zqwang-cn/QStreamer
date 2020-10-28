@@ -2,7 +2,7 @@
 
 void VideoReader::init()
 {
-    out = (cv::Mat*)find_out_pad("out")->get_buffer().get();
+    out = (cv::Mat*)find_out_pad("out")->get_buffer();
     uri = get_property("uri");
     cap.open(uri);
 }
@@ -19,7 +19,7 @@ void VideoReader::finalize()
 
 void ImageDisplayer::init()
 {
-    in = (cv::Mat*)find_in_pad("in")->get_buffer().get();
+    in = (cv::Mat*)find_in_pad("in")->get_buffer();
     title = get_property("title");
 }
 

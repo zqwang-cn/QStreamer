@@ -11,8 +11,10 @@
         "in_pads": {},
         "out_pads": {
             "out": {
-                "type": "Mat",
-                "size": 1
+                "frame": {
+                    "type": "Mat",
+                    "size": 1
+                }
             }
         }
     },
@@ -27,8 +29,10 @@
         ],
         "in_pads": {
             "in": {
-                "type": "Mat",
-                "size": 1
+                "frame": {
+                    "type": "Mat",
+                    "size": 1
+                }
             }
         },
         "out_pads": {}

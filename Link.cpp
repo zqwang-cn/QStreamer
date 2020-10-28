@@ -5,22 +5,22 @@
 
 Link* Link::create_link(Json::Value config)
 {
-    auto type = config["type"].asString();
-    auto size = config["size"].asInt();
-    char* buffer;
-    if (type == "float")
-        buffer = (char*)(new float[size]);
-    else if (type == "Mat")
-        buffer = (char*)(new cv::Mat[size]);
-    else
-        assert(false);
-
-    Link* link = new Link(buffer);
+    Link* link = new Link();
+    for (auto name : config.getMemberNames())
+    {
+        auto link_config = config[name];
+        auto type = link_config["type"].asString();
+        auto size = link_config["size"].asInt();
+        void* buffer;
+        if (type == "float")
+            buffer = new float[size];
+        else if (type == "Mat")
+            buffer = new cv::Mat[size];
+        else
+            assert(false);
+        link->add_buffer(name, buffer);
+    }
     return link;
-}
-
-Link::Link(char* ptr) : _buffer(ptr)
-{
 }
 
 void Link::set_to_element(Element* element)
@@ -33,7 +33,20 @@ void Link::notify()
     _to_element->pad_ready(this);
 }
 
-std::shared_ptr<char> Link::get_buffer()
+void Link::add_buffer(std::string name, void* buffer)
 {
-    return _buffer;
+    _buffers.emplace(name, buffer);
+}
+
+void* Link::get_buffer()
+{
+    assert(_buffers.size() == 1);
+    return _buffers.begin()->second;
+}
+
+void* Link::get_buffer(std::string name)
+{
+    auto iter = _buffers.find(name);
+    assert(iter != _buffers.end());
+    return iter->second;
 }
