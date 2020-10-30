@@ -11,8 +11,7 @@ public:
     virtual void finalize();
 
 private:
-    cv::Mat* in_image;
-    cv::Mat* out_image;
-    std::vector<DetectorResult>* result;
+    cv::Mat image;
+    std::vector<DetectorResult> results;
     RetinaFaceDetector* detector;
 };

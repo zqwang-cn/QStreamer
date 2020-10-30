@@ -33,35 +33,40 @@ Element* Element::create_element(Json::Value config)
         element->set_property(name, value);
     }
 
+    auto in_pads = config["in_pads"];
+    for (auto name : in_pads.getMemberNames())
+    {
+        Pad* in_pad = new Pad(element, PadType::InPad);
+        element->add_in_pad(name, in_pad);
+    }
     auto out_pads = config["out_pads"];
     for (auto name : out_pads.getMemberNames())
     {
-        Link* link = Link::create_link(out_pads[name]);
-        element->add_out_pad(name, link);
+        Pad* out_pad = new Pad(element, PadType::OutPad);
+        element->add_out_pad(name, out_pad);
     }
     return element;
 }
 
-void Element::add_in_pad(std::string name, Link* link)
+void Element::add_in_pad(std::string name, Pad* in_pad)
 {
-    _in_pads.emplace(name, link);
-    _in_pads_ready.emplace(link, false);
-    link->set_to_element(this);
+    _in_pads.emplace(name, in_pad);
+    _buffers.emplace(in_pad, nullptr);
 }
 
-void Element::add_out_pad(std::string name, Link* link)
+void Element::add_out_pad(std::string name, Pad* out_pad)
 {
-    _out_pads.emplace(name, link);
+    _out_pads.emplace(name, out_pad);
 }
 
-Link* Element::find_in_pad(std::string name)
+Pad* Element::find_in_pad(std::string name)
 {
     auto iter = _in_pads.find(name);
     assert(iter != _in_pads.end());
     return iter->second;
 }
 
-Link* Element::find_out_pad(std::string name)
+Pad* Element::find_out_pad(std::string name)
 {
     auto iter = _out_pads.find(name);
     assert(iter != _out_pads.end());
@@ -83,25 +88,28 @@ void Element::set_pipeline(Pipeline* pipeline)
     _pipeline = pipeline;
 }
 
-void Element::pad_ready(Link* link)
+void Element::pad_ready(Pad* pad, Buffer* buffer)
 {
-    auto iter = _in_pads_ready.find(link);
-    assert(iter != _in_pads_ready.end());
-    iter->second = true;
-    for (auto iter = _in_pads_ready.begin(); iter != _in_pads_ready.end(); iter++)
-        if (!iter->second)
+    auto iter = _buffers.find(pad);
+    assert(iter != _buffers.end());
+    iter->second = buffer;
+    for (auto iter = _buffers.begin(); iter != _buffers.end(); iter++)
+        if (iter->second == nullptr)
             return;
     _pipeline->element_ready(this);
 }
 
-void Element::notify()
+Buffer* Element::get_buffer(std::string pad_name)
 {
-    for (auto iter = _out_pads.begin(); iter != _out_pads.end(); iter++)
-        iter->second->notify();
+    auto pad = find_in_pad(pad_name);
+    auto iter = _buffers.find(pad);
+    assert(iter != _buffers.end());
+    auto buffer = iter->second;
+    return buffer;
 }
 
 void Element::unready()
 {
-    for (auto iter = _in_pads_ready.begin(); iter != _in_pads_ready.end(); iter++)
-        iter->second = false;
+    for (auto iter = _buffers.begin(); iter != _buffers.end(); iter++)
+        iter->second = nullptr;
 }

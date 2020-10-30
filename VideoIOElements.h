@@ -10,7 +10,7 @@ public:
     virtual void finalize();
 
 private:
-    cv::Mat* out;
+    cv::Mat image;
     std::string uri;
     cv::VideoCapture cap;
 };
@@ -23,6 +23,6 @@ public:
     virtual void finalize();
 
 private:
-    cv::Mat* in;
+    cv::Mat image;
     std::string title;
 };

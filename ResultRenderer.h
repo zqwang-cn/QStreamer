@@ -11,7 +11,6 @@ public:
     virtual void finalize();
 
 private:
-    cv::Mat* in_image;
-    std::vector<DetectorResult>* det_results;
-    cv::Mat* out_image;
+    cv::Mat image;
+    std::vector<DetectorResult> det_results;
 };

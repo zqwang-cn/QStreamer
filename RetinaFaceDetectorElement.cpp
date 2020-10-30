@@ -2,17 +2,16 @@
 
 void RetinaFaceDetectorElement::init()
 {
-    in_image = (cv::Mat*)find_in_pad("in")->get_buffer();
-    out_image = (cv::Mat*)find_out_pad("out")->get_buffer("image");
-    result = (std::vector<DetectorResult>*)find_out_pad("out")->get_buffer("det_results");
     detector = new RetinaFaceDetector(get_property("config_file"));
 }
 
 void RetinaFaceDetectorElement::process()
 {
-    auto r = detector->detect(*in_image);
-    *out_image = *in_image;
-    *result = r;
+    auto buffer = get_buffer("in");
+    image = std::any_cast<cv::Mat>(buffer->get_buffer("image"));
+    results = detector->detect(image);
+    buffer->set_buffer("det_results", results);
+    find_out_pad("out")->send_buffer(buffer);
 }
 
 void RetinaFaceDetectorElement::finalize()

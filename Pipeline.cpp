@@ -17,14 +17,16 @@ Pipeline::Pipeline(Json::Value config)
         auto from_ele_name = from["element_name"].asString();
         auto from_pad_name = from["pad_name"].asString();
         auto from_ele = find_element(from_ele_name);
+        auto from_pad = from_ele->find_out_pad(from_pad_name);
 
         auto to = link_config["to"];
         auto to_ele_name = to["element_name"].asString();
         auto to_pad_name = to["pad_name"].asString();
         auto to_ele = find_element(to_ele_name);
+        auto to_pad = to_ele->find_in_pad(to_pad_name);
 
-        auto link = from_ele->find_out_pad(from_pad_name);
-        to_ele->add_in_pad(to_pad_name, link);
+        from_pad->link(to_pad);
+        to_pad->link(from_pad);
     }
 
     for (auto iter = _elements.begin(); iter != _elements.end(); iter++)
@@ -52,7 +54,6 @@ void Pipeline::run()
         {
             auto element = _ready_elements.front();
             element->process();
-            element->notify();
             element->unready();
             _ready_elements.pop();
         }
