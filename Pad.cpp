@@ -12,7 +12,7 @@ void Pad::link(Pad* pad)
 
 void Pad::receive_buffer(Buffer* buffer)
 {
-    _element->pad_ready(this, buffer);
+    _element->set_buffer(this, buffer);
 }
 
 void Pad::send_buffer(Buffer* buffer)

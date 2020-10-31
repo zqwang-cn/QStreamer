@@ -16,5 +16,5 @@ private:
     std::map<std::string, Element*> _elements;
     std::vector<Element*> _input_elements;
     std::queue<Element*> _ready_elements;
-    Element* find_element(std::string name);
+    Element* get_element(std::string name);
 };

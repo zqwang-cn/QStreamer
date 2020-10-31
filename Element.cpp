@@ -37,40 +37,26 @@ Element* Element::create_element(Json::Value config)
     for (auto name : in_pads.getMemberNames())
     {
         Pad* in_pad = new Pad(element, PadType::InPad);
-        element->add_in_pad(name, in_pad);
+        element->_in_pads[name] = in_pad;
+        element->_buffers.emplace(in_pad, nullptr);
     }
     auto out_pads = config["out_pads"];
     for (auto name : out_pads.getMemberNames())
     {
         Pad* out_pad = new Pad(element, PadType::OutPad);
-        element->add_out_pad(name, out_pad);
+        element->_out_pads[name] = out_pad;
     }
     return element;
 }
 
-void Element::add_in_pad(std::string name, Pad* in_pad)
+Pad* Element::get_in_pad(std::string name)
 {
-    _in_pads.emplace(name, in_pad);
-    _buffers.emplace(in_pad, nullptr);
+    return _in_pads[name];
 }
 
-void Element::add_out_pad(std::string name, Pad* out_pad)
+Pad* Element::get_out_pad(std::string name)
 {
-    _out_pads.emplace(name, out_pad);
-}
-
-Pad* Element::find_in_pad(std::string name)
-{
-    auto iter = _in_pads.find(name);
-    assert(iter != _in_pads.end());
-    return iter->second;
-}
-
-Pad* Element::find_out_pad(std::string name)
-{
-    auto iter = _out_pads.find(name);
-    assert(iter != _out_pads.end());
-    return iter->second;
+    return _out_pads[name];
 }
 
 int Element::n_in_pads()
@@ -88,7 +74,7 @@ void Element::set_pipeline(Pipeline* pipeline)
     _pipeline = pipeline;
 }
 
-void Element::pad_ready(Pad* pad, Buffer* buffer)
+void Element::set_buffer(Pad* pad, Buffer* buffer)
 {
     auto iter = _buffers.find(pad);
     assert(iter != _buffers.end());
@@ -101,7 +87,7 @@ void Element::pad_ready(Pad* pad, Buffer* buffer)
 
 Buffer* Element::get_buffer(std::string pad_name)
 {
-    auto pad = find_in_pad(pad_name);
+    auto pad = _in_pads[pad_name];
     auto iter = _buffers.find(pad);
     assert(iter != _buffers.end());
     auto buffer = iter->second;
@@ -112,4 +98,9 @@ void Element::unready()
 {
     for (auto iter = _buffers.begin(); iter != _buffers.end(); iter++)
         iter->second = nullptr;
+}
+
+void Element::run()
+{
+    process(_in_pads, _out_pads);
 }
