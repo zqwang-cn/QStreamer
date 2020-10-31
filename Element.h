@@ -17,18 +17,17 @@ public:
     int n_out_pads();
 
     void set_pipeline(Pipeline* pipeline);
-    void set_buffer(Pad* pad, Buffer* buffer);
-    Buffer* get_buffer(std::string pad_name);
+    void pad_ready(Pad* pad);
     void unready();
 
     void run();
     virtual void init() = 0;
-    virtual void process(std::map<std::string, Pad*>& in_pads, std::map<std::string, Pad*>& out_pads) = 0;
+    virtual void process(std::map<std::string, InPad*>& in_pads, std::map<std::string, OutPad*>& out_pads) = 0;
     virtual void finalize() = 0;
 
 private:
-    std::map<std::string, Pad*> _in_pads;
-    std::map<std::string, Pad*> _out_pads;
-    std::map<Pad*, Buffer*> _buffers;
+    std::map<std::string, InPad*> _in_pads;
+    std::map<std::string, OutPad*> _out_pads;
+    std::map<Pad*, bool> _pad_ready;
     Pipeline* _pipeline;
 };

@@ -4,9 +4,9 @@ void ResultRenderer::init()
 {
 }
 
-void ResultRenderer::process(std::map<std::string, Pad*>& in_pads, std::map<std::string, Pad*>& out_pads)
+void ResultRenderer::process(std::map<std::string, InPad*>& in_pads, std::map<std::string, OutPad*>& out_pads)
 {
-    auto buffer = get_buffer("in");
+    auto buffer = in_pads["in"]->get_buffer();
     image = std::any_cast<cv::Mat>(buffer->get_buffer("image"));
     det_results = std::any_cast<std::vector<DetectorResult>>(buffer->get_buffer("det_results"));
     for (auto result : det_results)

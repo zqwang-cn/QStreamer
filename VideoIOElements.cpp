@@ -6,7 +6,7 @@ void VideoReader::init()
     cap.open(uri);
 }
 
-void VideoReader::process(std::map<std::string, Pad*>& in_pads, std::map<std::string, Pad*>& out_pads)
+void VideoReader::process(std::map<std::string, InPad*>& in_pads, std::map<std::string, OutPad*>& out_pads)
 {
     cap.read(image);
     Buffer* buffer = new Buffer();
@@ -24,9 +24,9 @@ void ImageDisplayer::init()
     title = get_property("title");
 }
 
-void ImageDisplayer::process(std::map<std::string, Pad*>& in_pads, std::map<std::string, Pad*>& out_pads)
+void ImageDisplayer::process(std::map<std::string, InPad*>& in_pads, std::map<std::string, OutPad*>& out_pads)
 {
-    auto buffer = get_buffer("in");
+    auto buffer = in_pads["in"]->get_buffer();
     image = std::any_cast<cv::Mat>(buffer->get_buffer("image"));
     cv::imshow(title, image);
     cv::waitKey(1);

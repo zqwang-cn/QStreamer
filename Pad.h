@@ -1,24 +1,33 @@
 #pragma once
 #include "Buffer.h"
 
-enum class PadType
-{
-    InPad,
-    OutPad
-};
-
 class Element;
 
 class Pad
 {
 public:
-    Pad(Element* element, PadType type);
+    Pad(Element* element);
     void link(Pad* pad);
-    void send_buffer(Buffer* buffer);
+
+protected:
+    Element* _element;
+    Pad* _other_pad;
+};
+
+class InPad : public Pad
+{
+public:
+    InPad(Element* element);
     void receive_buffer(Buffer* buffer);
+    Buffer* get_buffer();
 
 private:
-    Element* _element;
-    PadType _type;
-    Pad* _other_pad;
+    Buffer* _buffer = nullptr;
+};
+
+class OutPad : public Pad
+{
+public:
+    OutPad(Element* element);
+    void send_buffer(Buffer* buffer);
 };

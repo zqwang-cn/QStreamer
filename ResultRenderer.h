@@ -7,7 +7,7 @@ class ResultRenderer : public Element
 {
 public:
     virtual void init();
-    virtual void process(std::map<std::string, Pad*>& in_pads, std::map<std::string, Pad*>& out_pads);
+    virtual void process(std::map<std::string, InPad*>& in_pads, std::map<std::string, OutPad*>& out_pads);
     virtual void finalize();
 
 private:
