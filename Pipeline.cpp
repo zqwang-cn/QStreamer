@@ -50,7 +50,7 @@ void Pipeline::run()
         for (auto iter = _input_elements.begin(); iter != _input_elements.end(); iter++)
             _ready_elements.push(*iter);
 
-        while (_ready_elements.size() > 0)
+        while (!_quit && _ready_elements.size() > 0)
         {
             auto element = _ready_elements.front();
             element->run();
