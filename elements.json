@@ -37,8 +37,8 @@
         },
         "out_pads": {}
     },
-    "RetinaFaceDetectorElement": {
-        "type": "RetinaFaceDetectorElement",
+    "DetectorElement": {
+        "type": "DetectorElement",
         "properties": [
             {
                 "name": "config_file",

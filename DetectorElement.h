@@ -1,9 +1,9 @@
 #pragma once
+#include "Detector.h"
 #include "Element.h"
-#include "RetinaFaceDetector.h"
 #include <opencv2/opencv.hpp>
 
-class RetinaFaceDetectorElement : public Element
+class DetectorElement : public Element
 {
 public:
     virtual void init();
@@ -13,5 +13,5 @@ public:
 private:
     cv::Mat image;
     std::vector<DetectorResult> results;
-    RetinaFaceDetector* detector;
+    Detector* detector;
 };

@@ -1,4 +1,18 @@
 #include "Detector.h"
+#include "CenternetDetector.h"
+#include "RetinaFaceDetector.h"
+
+Detector* Detector::create_detector(std::string config_file)
+{
+    Json::Value config = load_config_file(config_file);
+    std::string type = config["type"].asString();
+    if (type == "RetinaFaceDetector")
+        return new RetinaFaceDetector(config_file);
+    else if (type == "CenternetDetector")
+        return new CenternetDetector(config_file);
+    else
+        assert(false);
+}
 
 Detector::Detector(std::string config_file) : Model(config_file)
 {
@@ -9,7 +23,7 @@ Detector::Detector(std::string config_file) : Model(config_file)
     read_json_array(thresholds, config["thresholds"]);
 }
 
-std::vector<DetectorResult> Detector::detect(const cv::Mat &image)
+std::vector<DetectorResult> Detector::detect(const cv::Mat& image)
 {
     cv::Mat copy = image.clone();
     preprocess(copy);
@@ -18,7 +32,7 @@ std::vector<DetectorResult> Detector::detect(const cv::Mat &image)
     return objects;
 }
 
-const std::vector<std::string> &Detector::get_labels()
+const std::vector<std::string>& Detector::get_labels()
 {
     return labels;
 }
@@ -34,9 +48,9 @@ std::vector<DetectorResult> Detector::filter_results_by_area(std::vector<Detecto
     cv::fillPoly(mask, polygons, 255);
 
     std::vector<DetectorResult> ret;
-    for (DetectorResult &r : results)
+    for (DetectorResult& r : results)
     {
-        cv::Rect &bbox = r->bbox;
+        cv::Rect& bbox = r->bbox;
         int x = bbox.x + bbox.width / 2;
         int y = bbox.y + bbox.height / 2;
         if (mask.at<uchar>(y, x) != 0)

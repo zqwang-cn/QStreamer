@@ -1,7 +1,7 @@
 #include "Element.h"
 #include "Pipeline.h"
 #include "ResultRenderer.h"
-#include "RetinaFaceDetectorElement.h"
+#include "DetectorElement.h"
 #include "VideoIOElements.h"
 #include <assert.h>
 #include <iostream>
@@ -12,8 +12,8 @@ Element* Element::new_element(std::string type)
         return new VideoReader();
     else if (type == "ImageDisplayer")
         return new ImageDisplayer();
-    else if (type == "RetinaFaceDetectorElement")
-        return new RetinaFaceDetectorElement();
+    else if (type == "DetectorElement")
+        return new DetectorElement();
     else if (type == "ResultRenderer")
         return new ResultRenderer();
     else
