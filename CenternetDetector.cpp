@@ -4,7 +4,7 @@
 CenternetDetector::CenternetDetector(std::string config_file) : Detector(config_file)
 {
     hm_binding_index = runtime->get_engine()->getBindingIndex(config["hm_binding_name"].asCString());
-    hmax_binding_index = runtime->get_engine()->getBindingIndex(config["hmax_binding_name"].asCString());
+    //hmax_binding_index = runtime->get_engine()->getBindingIndex(config["hmax_binding_name"].asCString());
     wh_binding_index = runtime->get_engine()->getBindingIndex(config["wh_binding_name"].asCString());
     reg_binding_index = runtime->get_engine()->getBindingIndex(config["reg_binding_name"].asCString());
 
@@ -15,7 +15,7 @@ CenternetDetector::CenternetDetector(std::string config_file) : Detector(config_
 std::vector<DetectorResult> CenternetDetector::postprocess()
 {
     float *hm_buf = (float *)runtime->get_buf(hm_binding_index);
-    float *hmax_buf = (float *)runtime->get_buf(hmax_binding_index);
+    //float *hmax_buf = (float *)runtime->get_buf(hmax_binding_index);
     float *wh_buf = (float *)runtime->get_buf(wh_binding_index);
     float *reg_buf = (float *)runtime->get_buf(reg_binding_index);
     std::vector<DetectorResult> results;
@@ -32,8 +32,9 @@ std::vector<DetectorResult> CenternetDetector::postprocess()
             for (int x = 0; x < output_width; x++)
             {
                 float score = hm_buf[c * output_height * output_width + y * output_width + x];
-                float hmax = hmax_buf[c * output_height * output_width + y * output_width + x];
-                if (score == hmax && score > threshold)
+                //float hmax = hmax_buf[c * output_height * output_width + y * output_width + x];
+                //if (score == hmax && score > threshold)
+                if (score > threshold)
                 {
                     float &w = wh_buf[(2 * c + 0) * output_height * output_width + y * output_width + x];
                     float &h = wh_buf[(2 * c + 1) * output_height * output_width + y * output_width + x];
