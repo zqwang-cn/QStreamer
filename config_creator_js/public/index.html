@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>QStreamer config creator</title>
+
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row" style="height: 800px;">
+      <div class="col-md-2" id="container-ele">
+      </div>
+      <div class="col-md-8" id="container-con">
+      </div>
+      <div class="col-md-2">
+        <h3>
+          属性设置
+        </h3>
+        <form role="form">
+          <div id="properties">
+          </div>
+          <button type="button" class="btn btn-primary" id="save">
+            保存属性
+          </button>
+        </form>
+        <button type="button" class="btn btn-success" id="export" style="bottom: 0;position: absolute;">
+          运行
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/bundled.js"></script>
+</body>
+
+</html>

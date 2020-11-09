@@ -1,0 +1,91 @@
+{
+    "VideoReader": {
+        "type": "VideoReader",
+        "properties": {
+            "uri": {
+                "type": "string",
+                "value": ""
+            }
+        },
+        "in_pads": {},
+        "out_pads": {
+            "out": {
+                "image": {
+                    "type": "Mat",
+                    "size": 1
+                }
+            }
+        }
+    },
+    "ImageDisplayer": {
+        "type": "ImageDisplayer",
+        "properties": {
+            "title": {
+                "type": "string",
+                "value": "image"
+            }
+        },
+        "in_pads": {
+            "in": {
+                "image": {
+                    "type": "Mat",
+                    "size": 1
+                }
+            }
+        },
+        "out_pads": {}
+    },
+    "DetectorElement": {
+        "type": "DetectorElement",
+        "properties": {
+            "config_file": {
+                "type": "string",
+                "value": ""
+            }
+        },
+        "in_pads": {
+            "in": {
+                "image": {
+                    "type": "Mat",
+                    "size": 1
+                }
+            }
+        },
+        "out_pads": {
+            "out": {
+                "image": {
+                    "type": "Mat",
+                    "size": 1
+                },
+                "det_results": {
+                    "type": "std::vector<DetectorResult>",
+                    "size": 1
+                }
+            }
+        }
+    },
+    "ResultRenderer": {
+        "type": "ResultRenderer",
+        "properties": {},
+        "in_pads": {
+            "in": {
+                "image": {
+                    "type": "Mat",
+                    "size": 1
+                },
+                "det_results": {
+                    "type": "std::vector<DetectorResult>",
+                    "size": 1
+                }
+            }
+        },
+        "out_pads": {
+            "out": {
+                "image": {
+                    "type": "Mat",
+                    "size": 1
+                }
+            }
+        }
+    }
+}

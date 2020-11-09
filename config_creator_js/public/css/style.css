@@ -1,0 +1,22 @@
+#container-ele{
+  border: 1px solid gray;
+}
+#container-con{
+  border: 1px solid gray;
+}
+
+.node-ele {
+    margin-top: 20px;
+}
+.node-con {
+  position: absolute;
+}
+.node-label {
+  text-align: center;
+}
+.node-inner {
+  height: 80px;
+  width: 80px;
+  border: 1px solid blue;
+  margin: 0 auto;
+}
