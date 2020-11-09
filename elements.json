@@ -1,13 +1,12 @@
 {
     "VideoReader": {
         "type": "VideoReader",
-        "properties": [
-            {
-                "name": "uri",
+        "properties": {
+            "uri": {
                 "type": "string",
                 "value": ""
             }
-        ],
+        },
         "in_pads": {},
         "out_pads": {
             "out": {
@@ -20,13 +19,12 @@
     },
     "ImageDisplayer": {
         "type": "ImageDisplayer",
-        "properties": [
-            {
-                "name": "title",
+        "properties": {
+            "title": {
                 "type": "string",
                 "value": "image"
             }
-        ],
+        },
         "in_pads": {
             "in": {
                 "image": {
@@ -39,13 +37,12 @@
     },
     "DetectorElement": {
         "type": "DetectorElement",
-        "properties": [
-            {
-                "name": "config_file",
+        "properties": {
+            "config_file": {
                 "type": "string",
-                "value": "/home/wang/code/face_recognition/config/retina_face_detector/config.json"
+                "value": ""
             }
-        ],
+        },
         "in_pads": {
             "in": {
                 "image": {
@@ -69,7 +66,7 @@
     },
     "ResultRenderer": {
         "type": "ResultRenderer",
-        "properties": [],
+        "properties": {},
         "in_pads": {
             "in": {
                 "image": {

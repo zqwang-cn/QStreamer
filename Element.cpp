@@ -26,10 +26,9 @@ Element* Element::create_element(Json::Value config)
     Element* element = Element::new_element(type);
 
     auto properties = config["properties"];
-    for (auto property : properties)
+    for (auto name : properties.getMemberNames())
     {
-        auto name = property["name"].asString();
-        auto value = property["value"].asString();
+        auto value = properties[name]["value"].asString();
         element->set_property(name, value);
     }
 
