@@ -1,7 +1,7 @@
 #include "Element.h"
+#include "DetectorElement.h"
 #include "Pipeline.h"
 #include "ResultRenderer.h"
-#include "DetectorElement.h"
 #include "VideoIOElements.h"
 #include <assert.h>
 #include <iostream>
@@ -16,6 +16,8 @@ Element* Element::new_element(std::string type)
         return new DetectorElement();
     else if (type == "ResultRenderer")
         return new ResultRenderer();
+    else if (type == "RTMPPushStreamElement")
+        return new RTMPPushStreamElement();
     else
         assert(false);
 }

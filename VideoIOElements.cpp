@@ -42,3 +42,26 @@ void ImageDisplayer::process(const std::map<std::string, InPad*>& in_pads, const
 void ImageDisplayer::finalize()
 {
 }
+
+void RTMPPushStreamElement::init(const std::map<std::string, std::string>& properties)
+{
+    std::string uri = properties.at("uri");
+    int width = 1024;
+    int height = 576;
+    int fps = 24;
+    int stride = width * 3;
+    sender = new RTMPSender(uri, width, height, fps, stride);
+}
+
+void RTMPPushStreamElement::process(const std::map<std::string, InPad*>& in_pads, const std::map<std::string, OutPad*>& out_pads)
+{
+    auto buffer = in_pads.at("in")->get_buffer();
+    image = std::any_cast<cv::Mat>(buffer->get_buffer("image"));
+    sender->send(image.data);
+    delete buffer;
+}
+
+void RTMPPushStreamElement::finalize()
+{
+    delete sender;
+}

@@ -13,5 +13,7 @@ find_package(CUDA REQUIRED)
 include_directories(${CUDA_INCLUDE_DIRS})
 link_libraries(${CUDA_LIBRARIES})
 
+link_libraries(avcodec avformat avutil swresample swscale)
+
 AUX_SOURCE_DIRECTORY(. DIR_SRCS)
 ADD_EXECUTABLE(main ${DIR_SRCS})

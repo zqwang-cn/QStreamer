@@ -87,5 +87,23 @@
                 }
             }
         }
+    },
+    "RTMPPushStreamElement": {
+        "type": "RTMPPushStreamElement",
+        "properties": {
+            "title": {
+                "type": "string",
+                "value": "uri"
+            }
+        },
+        "in_pads": {
+            "in": {
+                "image": {
+                    "type": "Mat",
+                    "size": 1
+                }
+            }
+        },
+        "out_pads": {}
     }
 }
