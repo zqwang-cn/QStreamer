@@ -53,7 +53,7 @@ void Pipeline::run()
         while (!_quit && _ready_elements.size() > 0)
         {
             auto element = _ready_elements.front();
-            element->run();
+            element->process();
             element->unready();
             _ready_elements.pop();
         }

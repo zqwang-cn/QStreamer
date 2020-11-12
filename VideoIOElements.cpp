@@ -1,13 +1,13 @@
 #include "VideoIOElements.h"
 #include "Pipeline.h"
 
-void VideoReader::init()
+void VideoReader::init(const std::map<std::string, std::string>& properties)
 {
-    uri = get_property("uri");
+    uri = properties.at("uri");
     cap.open(uri);
 }
 
-void VideoReader::process(std::map<std::string, InPad*>& in_pads, std::map<std::string, OutPad*>& out_pads)
+void VideoReader::process(const std::map<std::string, InPad*>& in_pads, const std::map<std::string, OutPad*>& out_pads)
 {
     if (!cap.read(image))
     {
@@ -16,7 +16,7 @@ void VideoReader::process(std::map<std::string, InPad*>& in_pads, std::map<std::
     }
     Buffer* buffer = new Buffer();
     buffer->set_buffer("image", image);
-    out_pads["out"]->send_buffer(buffer);
+    out_pads.at("out")->send_buffer(buffer);
 }
 
 void VideoReader::finalize()
@@ -24,14 +24,14 @@ void VideoReader::finalize()
     cap.release();
 }
 
-void ImageDisplayer::init()
+void ImageDisplayer::init(const std::map<std::string, std::string>& properties)
 {
-    title = get_property("title");
+    title = properties.at("title");
 }
 
-void ImageDisplayer::process(std::map<std::string, InPad*>& in_pads, std::map<std::string, OutPad*>& out_pads)
+void ImageDisplayer::process(const std::map<std::string, InPad*>& in_pads, const std::map<std::string, OutPad*>& out_pads)
 {
-    auto buffer = in_pads["in"]->get_buffer();
+    auto buffer = in_pads.at("in")->get_buffer();
     image = std::any_cast<cv::Mat>(buffer->get_buffer("image"));
     cv::imshow(title, image);
     if (cv::waitKey(1) == 27)

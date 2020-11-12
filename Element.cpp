@@ -29,7 +29,7 @@ Element* Element::create_element(Json::Value config)
     for (auto name : properties.getMemberNames())
     {
         auto value = properties[name]["value"].asString();
-        element->set_property(name, value);
+        element->_properties[name] = value;
     }
 
     auto in_pads = config["in_pads"];
@@ -90,7 +90,12 @@ void Element::unready()
         iter->second = false;
 }
 
-void Element::run()
+void Element::init()
+{
+    init(_properties);
+}
+
+void Element::process()
 {
     process(_in_pads, _out_pads);
 }

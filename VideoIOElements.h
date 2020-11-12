@@ -5,8 +5,8 @@
 class VideoReader : public Element
 {
 public:
-    virtual void init();
-    virtual void process(std::map<std::string, InPad*>& in_pads, std::map<std::string, OutPad*>& out_pads);
+    virtual void init(const std::map<std::string, std::string>& properties);
+    virtual void process(const std::map<std::string, InPad*>& in_pads, const std::map<std::string, OutPad*>& out_pads);
     virtual void finalize();
 
 private:
@@ -18,8 +18,8 @@ private:
 class ImageDisplayer : public Element
 {
 public:
-    virtual void init();
-    virtual void process(std::map<std::string, InPad*>& in_pads, std::map<std::string, OutPad*>& out_pads);
+    virtual void init(const std::map<std::string, std::string>& properties);
+    virtual void process(const std::map<std::string, InPad*>& in_pads, const std::map<std::string, OutPad*>& out_pads);
     virtual void finalize();
 
 private:
