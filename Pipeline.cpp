@@ -39,8 +39,16 @@ Pipeline::Pipeline(Json::Value config)
 
 void Pipeline::init()
 {
-    for (auto iter = _elements.begin(); iter != _elements.end(); iter++)
-        iter->second->init();
+    for (auto iter = _input_elements.begin(); iter != _input_elements.end(); iter++)
+        _ready_elements.push(*iter);
+
+    while (!_quit && _ready_elements.size() > 0)
+    {
+        auto element = _ready_elements.front();
+        element->init();
+        element->unready();
+        _ready_elements.pop();
+    }
 }
 
 void Pipeline::run()

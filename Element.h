@@ -21,7 +21,7 @@ public:
 
     void init();
     void process();
-    virtual void init(const std::map<std::string, std::any>& properties) = 0;
+    virtual void init(const std::map<std::string, std::any>& properties, const std::map<std::string, InPad*>& in_pads, const std::map<std::string, OutPad*>& out_pads) = 0;
     virtual void process(const std::map<std::string, InPad*>& in_pads, const std::map<std::string, OutPad*>& out_pads) = 0;
     virtual void finalize() = 0;
 

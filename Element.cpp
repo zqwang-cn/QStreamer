@@ -47,7 +47,7 @@ Element* Element::create_element(Json::Value config)
     {
         InPad* in_pad = new InPad(element);
         element->_in_pads[name] = in_pad;
-        element->_pad_ready.emplace(in_pad, nullptr);
+        element->_pad_ready.emplace(in_pad, false);
     }
     auto out_pads = config["out_pads"];
     for (auto name : out_pads.getMemberNames())
@@ -102,7 +102,7 @@ void Element::unready()
 
 void Element::init()
 {
-    init(_properties);
+    init(_properties, _in_pads, _out_pads);
 }
 
 void Element::process()
