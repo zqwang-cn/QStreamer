@@ -13,7 +13,7 @@ void ResultRenderer::process(const std::map<std::string, InPad*>& in_pads, const
     for (auto result : det_results)
         cv::rectangle(image, result->bbox, cv::Scalar(0, 0, 255));
     buffer->remove_buffer("det_results");
-    out_pads.at("out")->send_buffer(buffer);
+    out_pads.at("out")->send_buffer(std::move(buffer));
 }
 
 void ResultRenderer::finalize()

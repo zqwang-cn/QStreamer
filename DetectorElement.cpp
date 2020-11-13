@@ -13,7 +13,7 @@ void DetectorElement::process(const std::map<std::string, InPad*>& in_pads, cons
     auto image = std::any_cast<cv::Mat>(buffer->get_buffer("image"));
     auto results = detector->detect(image);
     buffer->set_buffer("det_results", results);
-    out_pads.at("out")->send_buffer(buffer);
+    out_pads.at("out")->send_buffer(std::move(buffer));
 }
 
 void DetectorElement::finalize()

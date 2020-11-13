@@ -18,16 +18,16 @@ class InPad : public Pad
 {
 public:
     InPad(Element* element);
-    void receive_buffer(Buffer* buffer);
-    Buffer* get_buffer();
+    void receive_buffer(Buffer&& buffer);
+    Buffer&& get_buffer();
 
 private:
-    Buffer* _buffer = nullptr;
+    Buffer _buffer;
 };
 
 class OutPad : public Pad
 {
 public:
     OutPad(Element* element);
-    void send_buffer(Buffer* buffer);
+    void send_buffer(Buffer&& buffer);
 };

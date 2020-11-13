@@ -1,9 +1,10 @@
 #pragma once
 #include <any>
 #include <map>
+#include <memory>
 #include <string>
 
-class Buffer
+class _Buffer
 {
 public:
     std::any get_buffer(std::string name);
@@ -13,3 +14,5 @@ public:
 private:
     std::map<std::string, std::any> _data;
 };
+
+using Buffer = std::unique_ptr<_Buffer>;

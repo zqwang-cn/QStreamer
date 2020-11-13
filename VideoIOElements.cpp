@@ -11,9 +11,9 @@ void VideoReader::init(const std::map<std::string, std::any>& properties, const 
     input_meta["height"] = int(cap.get(CV_CAP_PROP_FRAME_HEIGHT));
     input_meta["fps"] = int(cap.get(CV_CAP_PROP_FPS));
     input_meta["stride"] = width * 3;
-    auto buffer = new Buffer();
+    Buffer buffer(new _Buffer());
     buffer->set_buffer("input_meta", input_meta);
-    out_pads.at("out")->send_buffer(buffer);
+    out_pads.at("out")->send_buffer(std::move(buffer));
 }
 
 void VideoReader::process(const std::map<std::string, InPad*>& in_pads, const std::map<std::string, OutPad*>& out_pads)
@@ -24,9 +24,9 @@ void VideoReader::process(const std::map<std::string, InPad*>& in_pads, const st
         _pipeline->stop();
         return;
     }
-    auto buffer = new Buffer();
+    Buffer buffer(new _Buffer());
     buffer->set_buffer("image", image);
-    out_pads.at("out")->send_buffer(buffer);
+    out_pads.at("out")->send_buffer(std::move(buffer));
 }
 
 void VideoReader::finalize()
@@ -38,7 +38,6 @@ void ImageDisplayer::init(const std::map<std::string, std::any>& properties, con
 {
     title = std::any_cast<std::string>(properties.at("title"));
     auto buffer = in_pads.at("in")->get_buffer();
-    delete buffer;
 }
 
 void ImageDisplayer::process(const std::map<std::string, InPad*>& in_pads, const std::map<std::string, OutPad*>& out_pads)
@@ -48,7 +47,6 @@ void ImageDisplayer::process(const std::map<std::string, InPad*>& in_pads, const
     cv::imshow(title, image);
     if (cv::waitKey(1) == 27)
         _pipeline->stop();
-    delete buffer;
 }
 
 void ImageDisplayer::finalize()
@@ -64,7 +62,6 @@ void RTMPPushStreamElement::init(const std::map<std::string, std::any>& properti
     int height = input_meta.at("height");
     int fps = input_meta.at("fps");
     int stride = input_meta.at("stride");
-    delete buffer;
     sender = new RTMPSender(uri, width, height, fps, stride);
 }
 
@@ -73,7 +70,6 @@ void RTMPPushStreamElement::process(const std::map<std::string, InPad*>& in_pads
     auto buffer = in_pads.at("in")->get_buffer();
     auto image = std::any_cast<cv::Mat>(buffer->get_buffer("image"));
     sender->send(image.data);
-    delete buffer;
 }
 
 void RTMPPushStreamElement::finalize()
