@@ -169,7 +169,16 @@ function export_json() {
 
     var data = JSON.stringify(config, "", "\t");
     $.post("http://127.0.0.1:5000/save", data, function (data, status) {
-        console.log(data);
+        var uri;
+        for (var name in nodes) {
+            if (nodes[name].type == 'RTMPPushStreamElement') {
+                uri = nodes[name].properties.uri.value;
+                break;
+            }
+        }
+        if (uri) {
+            window.open("http://127.0.0.1:5000/play?uri=" + uri);
+        }
     });
 }
 
