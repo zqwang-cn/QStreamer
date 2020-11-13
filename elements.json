@@ -91,9 +91,9 @@
     "RTMPPushStreamElement": {
         "type": "RTMPPushStreamElement",
         "properties": {
-            "title": {
+            "uri": {
                 "type": "string",
-                "value": "uri"
+                "value": ""
             }
         },
         "in_pads": {

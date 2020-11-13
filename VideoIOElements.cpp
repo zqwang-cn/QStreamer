@@ -1,9 +1,9 @@
 #include "VideoIOElements.h"
 #include "Pipeline.h"
 
-void VideoReader::init(const std::map<std::string, std::string>& properties)
+void VideoReader::init(const std::map<std::string, std::any>& properties)
 {
-    uri = properties.at("uri");
+    uri = std::any_cast<std::string>(properties.at("uri"));
     cap.open(uri);
 }
 
@@ -24,9 +24,9 @@ void VideoReader::finalize()
     cap.release();
 }
 
-void ImageDisplayer::init(const std::map<std::string, std::string>& properties)
+void ImageDisplayer::init(const std::map<std::string, std::any>& properties)
 {
-    title = properties.at("title");
+    title = std::any_cast<std::string>(properties.at("title"));
 }
 
 void ImageDisplayer::process(const std::map<std::string, InPad*>& in_pads, const std::map<std::string, OutPad*>& out_pads)
@@ -43,9 +43,9 @@ void ImageDisplayer::finalize()
 {
 }
 
-void RTMPPushStreamElement::init(const std::map<std::string, std::string>& properties)
+void RTMPPushStreamElement::init(const std::map<std::string, std::any>& properties)
 {
-    std::string uri = properties.at("uri");
+    std::string uri = std::any_cast<std::string>(properties.at("uri"));
     int width = 1024;
     int height = 576;
     int fps = 24;

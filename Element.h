@@ -21,7 +21,7 @@ public:
 
     void init();
     void process();
-    virtual void init(const std::map<std::string, std::string>& properties) = 0;
+    virtual void init(const std::map<std::string, std::any>& properties) = 0;
     virtual void process(const std::map<std::string, InPad*>& in_pads, const std::map<std::string, OutPad*>& out_pads) = 0;
     virtual void finalize() = 0;
 
@@ -29,7 +29,7 @@ protected:
     Pipeline* _pipeline;
 
 private:
-    std::map<std::string, std::string> _properties;
+    std::map<std::string, std::any> _properties;
     std::map<std::string, InPad*> _in_pads;
     std::map<std::string, OutPad*> _out_pads;
     std::map<Pad*, bool> _pad_ready;

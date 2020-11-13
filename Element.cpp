@@ -30,8 +30,16 @@ Element* Element::create_element(Json::Value config)
     auto properties = config["properties"];
     for (auto name : properties.getMemberNames())
     {
-        auto value = properties[name]["value"].asString();
-        element->_properties[name] = value;
+        auto property = properties[name];
+        auto type = property["type"].asString();
+        if (type == "string")
+            element->_properties[name] = property["value"].asString();
+        else if (type == "int")
+            element->_properties[name] = property["value"].asInt();
+        else if (type == "float")
+            element->_properties[name] = property["value"].asFloat();
+        else
+            assert(false);
     }
 
     auto in_pads = config["in_pads"];

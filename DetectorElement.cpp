@@ -1,8 +1,9 @@
 #include "DetectorElement.h"
 
-void DetectorElement::init(const std::map<std::string, std::string>& properties)
+void DetectorElement::init(const std::map<std::string, std::any>& properties)
 {
-    detector = Detector::create_detector(properties.at("config_file"));
+    std::string config_file = std::any_cast<std::string>(properties.at("config_file"));
+    detector = Detector::create_detector(config_file);
 }
 
 void DetectorElement::process(const std::map<std::string, InPad*>& in_pads, const std::map<std::string, OutPad*>& out_pads)

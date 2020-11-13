@@ -1,6 +1,6 @@
 #include "ResultRenderer.h"
 
-void ResultRenderer::init(const std::map<std::string, std::string>& properties)
+void ResultRenderer::init(const std::map<std::string, std::any>& properties)
 {
 }
 
