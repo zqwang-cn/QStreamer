@@ -2,7 +2,7 @@
 #include "utils.h"
 #include <signal.h>
 
-Pipeline* p;
+Pipeline p;
 
 void quit(int s)
 {
@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
     signal(SIGINT, quit);
 
     auto config = load_config_file(argv[1]);
-    p = new Pipeline(config);
+    p = create_pipeline(config);
     p->init();
     p->run();
     p->finalize();
