@@ -1,20 +1,14 @@
 #include "Pipeline.h"
 #include <assert.h>
 
-Pipeline create_pipeline(Json::Value config)
+Pipeline::Pipeline(Json::Value config)
 {
-    Pipeline pipeline = std::make_shared<_Pipeline>();
-    std::map<std::string, Element*> elements;
-    std::vector<Element*> input_elements;
-
     auto element_config = config["elements"];
     for (auto name : element_config.getMemberNames())
     {
         auto element = Element::create_element(element_config[name]);
-        element->set_pipeline(pipeline);
-        elements.emplace(name, element);
-        if (element->n_in_pads() == 0)
-            input_elements.push_back(element);
+        element->set_pipeline(this);
+        _elements.emplace(name, element);
     }
 
     for (auto link_config : config["links"])
@@ -22,30 +16,28 @@ Pipeline create_pipeline(Json::Value config)
         auto from = link_config["from"];
         auto from_ele_name = from["element_name"].asString();
         auto from_pad_name = from["pad_name"].asString();
-        auto from_ele = elements.at(from_ele_name);
+        auto from_ele = get_element(from_ele_name);
         auto from_pad = from_ele->get_out_pad(from_pad_name);
 
         auto to = link_config["to"];
         auto to_ele_name = to["element_name"].asString();
         auto to_pad_name = to["pad_name"].asString();
-        auto to_ele = elements.at(to_ele_name);
+        auto to_ele = get_element(to_ele_name);
         auto to_pad = to_ele->get_in_pad(to_pad_name);
 
         from_pad->link(to_pad);
         to_pad->link(from_pad);
     }
 
-    pipeline->set(std::move(elements), std::move(input_elements));
-    return pipeline;
+    for (auto iter = _elements.begin(); iter != _elements.end(); iter++)
+    {
+        auto element = iter->second;
+        if (element->n_in_pads() == 0)
+            _input_elements.push_back(element);
+    }
 }
 
-void _Pipeline::set(std::map<std::string, Element*>&& elements, std::vector<Element*>&& input_elements)
-{
-    _elements = std::move(elements);
-    _input_elements = std::move(input_elements);
-}
-
-void _Pipeline::init()
+void Pipeline::init()
 {
     for (auto iter = _input_elements.begin(); iter != _input_elements.end(); iter++)
         _ready_elements.push(*iter);
@@ -59,7 +51,7 @@ void _Pipeline::init()
     }
 }
 
-void _Pipeline::run()
+void Pipeline::run()
 {
     while (!_quit)
     {
@@ -76,18 +68,25 @@ void _Pipeline::run()
     }
 }
 
-void _Pipeline::stop()
+void Pipeline::stop()
 {
     _quit = true;
 }
 
-void _Pipeline::finalize()
+void Pipeline::finalize()
 {
     for (auto iter = _elements.begin(); iter != _elements.end(); iter++)
         iter->second->finalize();
 }
 
-void _Pipeline::element_ready(Element* element)
+void Pipeline::element_ready(Element* element)
 {
     _ready_elements.push(element);
+}
+
+Element* Pipeline::get_element(std::string name)
+{
+    auto iter = _elements.find(name);
+    assert(iter != _elements.end());
+    return iter->second;
 }

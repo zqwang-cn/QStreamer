@@ -2,8 +2,7 @@
 #include "Pad.h"
 #include "json/json.h"
 
-class _Pipeline;
-using Pipeline = std::shared_ptr<_Pipeline>;
+class Pipeline;
 
 class Element
 {
@@ -16,7 +15,7 @@ public:
     int n_in_pads();
     int n_out_pads();
 
-    void set_pipeline(Pipeline pipeline);
+    void set_pipeline(Pipeline* pipeline);
     void pad_ready(Pad* pad);
     void unready();
 
@@ -27,7 +26,7 @@ public:
     virtual void finalize() = 0;
 
 protected:
-    Pipeline _pipeline;
+    Pipeline* _pipeline;
 
 private:
     std::map<std::string, std::any> _properties;

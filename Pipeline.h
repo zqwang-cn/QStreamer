@@ -1,10 +1,10 @@
 #include "Element.h"
 #include <queue>
 
-class _Pipeline
+class Pipeline
 {
 public:
-    void set(std::map<std::string, Element*>&& elements, std::vector<Element*>&& input_elements);
+    Pipeline(Json::Value config);
     void init();
     void run();
     void stop();
@@ -16,8 +16,5 @@ private:
     std::map<std::string, Element*> _elements;
     std::vector<Element*> _input_elements;
     std::queue<Element*> _ready_elements;
+    Element* get_element(std::string name);
 };
-
-using Pipeline = std::shared_ptr<_Pipeline>;
-
-Pipeline create_pipeline(Json::Value config);

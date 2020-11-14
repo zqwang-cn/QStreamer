@@ -78,7 +78,7 @@ int Element::n_out_pads()
     return _out_pads.size();
 }
 
-void Element::set_pipeline(Pipeline pipeline)
+void Element::set_pipeline(Pipeline* pipeline)
 {
     _pipeline = pipeline;
 }
