@@ -20,4 +20,5 @@ int main(int argc, char* argv[])
     p->init();
     p->run();
     p->finalize();
+    delete p;
 }

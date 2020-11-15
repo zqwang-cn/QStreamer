@@ -22,10 +22,11 @@ Element* Element::new_element(std::string type)
         assert(false);
 }
 
-Element* Element::create_element(Json::Value config)
+Element* Element::create_element(Json::Value config, Pipeline* pipeline)
 {
     auto type = config["type"].asString();
     Element* element = Element::new_element(type);
+    element->_pipeline = pipeline;
 
     auto properties = config["properties"];
     for (auto name : properties.getMemberNames())
@@ -58,6 +59,14 @@ Element* Element::create_element(Json::Value config)
     return element;
 }
 
+Element::~Element()
+{
+    for (auto iter = _in_pads.begin(); iter != _in_pads.end(); iter++)
+        delete iter->second;
+    for (auto iter = _out_pads.begin(); iter != _out_pads.end(); iter++)
+        delete iter->second;
+}
+
 Pad* Element::get_in_pad(std::string name)
 {
     return _in_pads[name];
@@ -76,11 +85,6 @@ int Element::n_in_pads()
 int Element::n_out_pads()
 {
     return _out_pads.size();
-}
-
-void Element::set_pipeline(Pipeline* pipeline)
-{
-    _pipeline = pipeline;
 }
 
 void Element::pad_ready(Pad* pad)

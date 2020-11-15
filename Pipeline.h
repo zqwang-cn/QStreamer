@@ -5,16 +5,17 @@ class Pipeline
 {
 public:
     Pipeline(Json::Value config);
+    ~Pipeline();
     void init();
     void run();
     void stop();
     void finalize();
-    void element_ready(Element* element);
+    friend class Element;
 
 private:
     bool _quit = false;
     std::map<std::string, Element*> _elements;
-    std::vector<Element*> _input_elements;
+    std::queue<Element*> _input_elements;
     std::queue<Element*> _ready_elements;
-    Element* get_element(std::string name);
+    void element_ready(Element* element);
 };
