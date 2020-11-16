@@ -12,5 +12,5 @@ private:
     int reg_binding_index;
     int output_height;
     int output_width;
-    virtual std::vector<DetectionResult> postprocess();
+    virtual std::list<DetectionResult> postprocess();
 };

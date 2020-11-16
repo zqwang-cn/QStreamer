@@ -23,12 +23,12 @@ MDetector::MDetector(std::string config_file) : MModel(config_file)
     read_json_array(thresholds, config["thresholds"]);
 }
 
-std::vector<DetectionResult> MDetector::detect(const cv::Mat& image)
+std::list<DetectionResult> MDetector::detect(const cv::Mat& image)
 {
     cv::Mat copy = image.clone();
     preprocess(copy);
     infer(copy);
-    std::vector<DetectionResult> objects = postprocess();
+    std::list<DetectionResult> objects = postprocess();
     return objects;
 }
 
@@ -40,22 +40,4 @@ const std::vector<std::string>& MDetector::get_labels()
 int MDetector::get_n_categories()
 {
     return n_categories;
-}
-
-std::vector<DetectionResult> MDetector::filter_results_by_area(std::vector<DetectionResult> results, std::vector<std::vector<cv::Point>> polygons, int width, int height)
-{
-    cv::Mat mask = cv::Mat::zeros(height, width, CV_8UC1);
-    cv::fillPoly(mask, polygons, 255);
-
-    std::vector<DetectionResult> ret;
-    for (DetectionResult& r : results)
-    {
-        cv::Rect& bbox = r->bbox;
-        int x = bbox.x + bbox.width / 2;
-        int y = bbox.y + bbox.height / 2;
-        if (mask.at<uchar>(y, x) != 0)
-            ret.push_back(r);
-    }
-
-    return ret;
 }

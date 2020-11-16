@@ -48,7 +48,7 @@ MDetRetinaFace::MDetRetinaFace(std::string config_file) : MDetector(config_file)
     }
 }
 
-std::vector<DetectionResult> MDetRetinaFace::postprocess()
+std::list<DetectionResult> MDetRetinaFace::postprocess()
 {
     //decode box
     cv::Mat loc(priors.rows, priors.cols, CV_32F, runtime->get_buf(boxes_binding_index));
@@ -98,7 +98,7 @@ std::vector<DetectionResult> MDetRetinaFace::postprocess()
     nms(rect_src, scores_src, indices_res, 0.5);
 
     // generate results
-    std::vector<DetectionResult> results;
+    std::list<DetectionResult> results;
     for (int index : indices_res)
     {
         DetectionResultWithLandmarksStruct* obj = new DetectionResultWithLandmarksStruct();

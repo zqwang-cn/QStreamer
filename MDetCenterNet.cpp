@@ -12,13 +12,13 @@ MDetCenterNet::MDetCenterNet(std::string config_file) : MDetector(config_file)
     output_width = runtime->get_engine()->getBindingDimensions(hm_binding_index).d[3];
 }
 
-std::vector<DetectionResult> MDetCenterNet::postprocess()
+std::list<DetectionResult> MDetCenterNet::postprocess()
 {
     float *hm_buf = (float *)runtime->get_buf(hm_binding_index);
     //float *hmax_buf = (float *)runtime->get_buf(hmax_binding_index);
     float *wh_buf = (float *)runtime->get_buf(wh_binding_index);
     float *reg_buf = (float *)runtime->get_buf(reg_binding_index);
-    std::vector<DetectionResult> results;
+    std::list<DetectionResult> results;
 
     // for each category
     for (int c = 0; c < n_categories; c++)

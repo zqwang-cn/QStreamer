@@ -12,5 +12,5 @@ private:
     int landmarks_binding_index;
     std::vector<float> variance;
     cv::Mat priors;
-    virtual std::vector<DetectionResult> postprocess();
+    virtual std::list<DetectionResult> postprocess();
 };

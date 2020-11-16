@@ -58,7 +58,7 @@
                     "size": 1
                 },
                 "det_results": {
-                    "type": "std::vector<DetectionResult>",
+                    "type": "std::list<DetectionResult>",
                     "size": 1
                 }
             }
@@ -74,7 +74,7 @@
                     "size": 1
                 },
                 "det_results": {
-                    "type": "std::vector<DetectionResult>",
+                    "type": "std::list<DetectionResult>",
                     "size": 1
                 }
             }
