@@ -4,11 +4,11 @@
 #include "json/json.h"
 #include "TRTRuntime.h"
 
-class Model
+class MModel
 {
 public:
-    Model(std::string config_file);
-    ~Model();
+    MModel(std::string config_file);
+    ~MModel();
     const std::string &get_name();
     int get_input_width();
     int get_input_height();

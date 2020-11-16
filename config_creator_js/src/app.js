@@ -171,7 +171,7 @@ function export_json() {
     $.post("http://127.0.0.1:5000/save", data, function (data, status) {
         var uri;
         for (var name in nodes) {
-            if (nodes[name].type == 'RTMPPushStreamElement') {
+            if (nodes[name].type == 'ERtmpSender') {
                 uri = nodes[name].properties.uri.value;
                 break;
             }

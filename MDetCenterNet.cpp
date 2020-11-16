@@ -1,7 +1,7 @@
-#include "CenternetDetector.h"
+#include "MDetCenterNet.h"
 #include "utils.h"
 
-CenternetDetector::CenternetDetector(std::string config_file) : Detector(config_file)
+MDetCenterNet::MDetCenterNet(std::string config_file) : MDetector(config_file)
 {
     hm_binding_index = runtime->get_engine()->getBindingIndex(config["hm_binding_name"].asCString());
     //hmax_binding_index = runtime->get_engine()->getBindingIndex(config["hmax_binding_name"].asCString());
@@ -12,13 +12,13 @@ CenternetDetector::CenternetDetector(std::string config_file) : Detector(config_
     output_width = runtime->get_engine()->getBindingDimensions(hm_binding_index).d[3];
 }
 
-std::vector<DetectorResult> CenternetDetector::postprocess()
+std::vector<DetectionResult> MDetCenterNet::postprocess()
 {
     float *hm_buf = (float *)runtime->get_buf(hm_binding_index);
     //float *hmax_buf = (float *)runtime->get_buf(hmax_binding_index);
     float *wh_buf = (float *)runtime->get_buf(wh_binding_index);
     float *reg_buf = (float *)runtime->get_buf(reg_binding_index);
-    std::vector<DetectorResult> results;
+    std::vector<DetectionResult> results;
 
     // for each category
     for (int c = 0; c < n_categories; c++)
@@ -51,7 +51,7 @@ std::vector<DetectorResult> CenternetDetector::postprocess()
         // generate results
         for (int index : indices_res)
         {
-            DetectorResultStruct *obj = new DetectorResultStruct();
+            DetectionResultStruct *obj = new DetectionResultStruct();
             obj->bbox = bbox_float2int(rect_src[index], padded_width, padded_height, origin_width, origin_height);
             obj->score = scores_src[index];
             obj->category = c;

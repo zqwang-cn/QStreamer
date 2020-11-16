@@ -1,13 +1,13 @@
-#include "DetectorElement.h"
+#include "EDetector.h"
 
-void DetectorElement::init(const std::map<std::string, std::any>& properties, const std::map<std::string, InPad*>& in_pads, const std::map<std::string, OutPad*>& out_pads)
+void EDetector::init(const std::map<std::string, std::any>& properties, const std::map<std::string, QInPad*>& in_pads, const std::map<std::string, QOutPad*>& out_pads)
 {
     std::string config_file = std::any_cast<std::string>(properties.at("config_file"));
-    detector = Detector::create_detector(config_file);
+    detector = MDetector::create_detector(config_file);
     out_pads.at("out")->send_buffer(in_pads.at("in")->get_buffer());
 }
 
-void DetectorElement::process(const std::map<std::string, InPad*>& in_pads, const std::map<std::string, OutPad*>& out_pads)
+void EDetector::process(const std::map<std::string, QInPad*>& in_pads, const std::map<std::string, QOutPad*>& out_pads)
 {
     auto buffer = in_pads.at("in")->get_buffer();
     auto image = std::any_cast<cv::Mat>(buffer->get_buffer("image"));
@@ -16,7 +16,7 @@ void DetectorElement::process(const std::map<std::string, InPad*>& in_pads, cons
     out_pads.at("out")->send_buffer(std::move(buffer));
 }
 
-void DetectorElement::finalize()
+void EDetector::finalize()
 {
     delete detector;
 }

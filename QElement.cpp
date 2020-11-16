@@ -1,31 +1,33 @@
-#include "Element.h"
-#include "DetectorElement.h"
-#include "Pipeline.h"
-#include "ResultRenderer.h"
-#include "VideoIOElements.h"
+#include "QElement.h"
+#include "EDetector.h"
+#include "EDisplayer.h"
+#include "ERenderer.h"
+#include "ERtmpSender.h"
+#include "EVideoCapture.h"
+#include "QPipeline.h"
 #include <assert.h>
 #include <iostream>
 
-Element* Element::new_element(std::string type)
+QElement* QElement::new_element(std::string type)
 {
-    if (type == "VideoReader")
-        return new VideoReader();
-    else if (type == "ImageDisplayer")
-        return new ImageDisplayer();
-    else if (type == "DetectorElement")
-        return new DetectorElement();
-    else if (type == "ResultRenderer")
-        return new ResultRenderer();
-    else if (type == "RTMPPushStreamElement")
-        return new RTMPPushStreamElement();
+    if (type == "EVideoCapture")
+        return new EVideoCapture();
+    else if (type == "EDisplayer")
+        return new EDisplayer();
+    else if (type == "EDetector")
+        return new EDetector();
+    else if (type == "ERenderer")
+        return new ERenderer();
+    else if (type == "ERtmpSender")
+        return new ERtmpSender();
     else
         assert(false);
 }
 
-Element* Element::create_element(Json::Value config, Pipeline* pipeline)
+QElement* QElement::create_element(Json::Value config, QPipeline* pipeline)
 {
     auto type = config["type"].asString();
-    Element* element = Element::new_element(type);
+    QElement* element = QElement::new_element(type);
     element->_pipeline = pipeline;
 
     auto properties = config["properties"];
@@ -46,20 +48,20 @@ Element* Element::create_element(Json::Value config, Pipeline* pipeline)
     auto in_pads = config["in_pads"];
     for (auto name : in_pads.getMemberNames())
     {
-        InPad* in_pad = new InPad(element);
+        QInPad* in_pad = new QInPad(element);
         element->_in_pads[name] = in_pad;
         element->_pad_ready.emplace(in_pad, false);
     }
     auto out_pads = config["out_pads"];
     for (auto name : out_pads.getMemberNames())
     {
-        OutPad* out_pad = new OutPad(element);
+        QOutPad* out_pad = new QOutPad(element);
         element->_out_pads[name] = out_pad;
     }
     return element;
 }
 
-Element::~Element()
+QElement::~QElement()
 {
     for (auto iter = _in_pads.begin(); iter != _in_pads.end(); iter++)
         delete iter->second;
@@ -67,27 +69,27 @@ Element::~Element()
         delete iter->second;
 }
 
-Pad* Element::get_in_pad(std::string name)
+QPad* QElement::get_in_pad(std::string name)
 {
     return _in_pads[name];
 }
 
-Pad* Element::get_out_pad(std::string name)
+QPad* QElement::get_out_pad(std::string name)
 {
     return _out_pads[name];
 }
 
-int Element::n_in_pads()
+int QElement::n_in_pads()
 {
     return _in_pads.size();
 }
 
-int Element::n_out_pads()
+int QElement::n_out_pads()
 {
     return _out_pads.size();
 }
 
-void Element::pad_ready(Pad* pad)
+void QElement::pad_ready(QPad* pad)
 {
     auto iter = _pad_ready.find(pad);
     assert(iter != _pad_ready.end());
@@ -98,18 +100,23 @@ void Element::pad_ready(Pad* pad)
     _pipeline->element_ready(this);
 }
 
-void Element::unready()
+void QElement::unready()
 {
     for (auto iter = _pad_ready.begin(); iter != _pad_ready.end(); iter++)
         iter->second = false;
 }
 
-void Element::init()
+void QElement::init()
 {
     init(_properties, _in_pads, _out_pads);
 }
 
-void Element::process()
+void QElement::process()
 {
     process(_in_pads, _out_pads);
+}
+
+void QElement::quit()
+{
+    _pipeline->stop();
 }

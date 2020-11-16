@@ -1,10 +1,10 @@
 #pragma once
-#include "Detector.h"
+#include "MDetector.h"
 
-class RetinaFaceDetector : public Detector
+class MDetRetinaFace : public MDetector
 {
 public:
-    RetinaFaceDetector(std::string config_file);
+    MDetRetinaFace(std::string config_file);
 
 private:
     int boxes_binding_index;
@@ -12,5 +12,5 @@ private:
     int landmarks_binding_index;
     std::vector<float> variance;
     cv::Mat priors;
-    virtual std::vector<DetectorResult> postprocess();
+    virtual std::vector<DetectionResult> postprocess();
 };

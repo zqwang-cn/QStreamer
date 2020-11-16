@@ -1,6 +1,6 @@
-#include "RetinaFaceDetector.h"
+#include "MDetRetinaFace.h"
 
-RetinaFaceDetector::RetinaFaceDetector(std::string config_file) : Detector(config_file)
+MDetRetinaFace::MDetRetinaFace(std::string config_file) : MDetector(config_file)
 {
     // get configs
     boxes_binding_index = runtime->get_engine()->getBindingIndex(config["boxes_binding_name"].asCString());
@@ -48,7 +48,7 @@ RetinaFaceDetector::RetinaFaceDetector(std::string config_file) : Detector(confi
     }
 }
 
-std::vector<DetectorResult> RetinaFaceDetector::postprocess()
+std::vector<DetectionResult> MDetRetinaFace::postprocess()
 {
     //decode box
     cv::Mat loc(priors.rows, priors.cols, CV_32F, runtime->get_buf(boxes_binding_index));
@@ -98,10 +98,10 @@ std::vector<DetectorResult> RetinaFaceDetector::postprocess()
     nms(rect_src, scores_src, indices_res, 0.5);
 
     // generate results
-    std::vector<DetectorResult> results;
+    std::vector<DetectionResult> results;
     for (int index : indices_res)
     {
-        DetectorResultWithLandmarksStruct* obj = new DetectorResultWithLandmarksStruct();
+        DetectionResultWithLandmarksStruct* obj = new DetectionResultWithLandmarksStruct();
         obj->bbox = bbox_float2int(rect_src[index], padded_width, padded_height, origin_width, origin_height);
         if (obj->bbox.width < min_width || obj->bbox.height < min_height)
             continue;

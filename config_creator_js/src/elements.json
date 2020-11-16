@@ -1,6 +1,6 @@
 {
-    "VideoReader": {
-        "type": "VideoReader",
+    "EVideoCapture": {
+        "type": "EVideoCapture",
         "properties": {
             "uri": {
                 "type": "string",
@@ -17,8 +17,8 @@
             }
         }
     },
-    "ImageDisplayer": {
-        "type": "ImageDisplayer",
+    "EDisplayer": {
+        "type": "EDisplayer",
         "properties": {
             "title": {
                 "type": "string",
@@ -35,8 +35,8 @@
         },
         "out_pads": {}
     },
-    "DetectorElement": {
-        "type": "DetectorElement",
+    "EDetector": {
+        "type": "EDetector",
         "properties": {
             "config_file": {
                 "type": "string",
@@ -58,14 +58,14 @@
                     "size": 1
                 },
                 "det_results": {
-                    "type": "std::vector<DetectorResult>",
+                    "type": "std::vector<DetectionResult>",
                     "size": 1
                 }
             }
         }
     },
-    "ResultRenderer": {
-        "type": "ResultRenderer",
+    "ERenderer": {
+        "type": "ERenderer",
         "properties": {},
         "in_pads": {
             "in": {
@@ -74,7 +74,7 @@
                     "size": 1
                 },
                 "det_results": {
-                    "type": "std::vector<DetectorResult>",
+                    "type": "std::vector<DetectionResult>",
                     "size": 1
                 }
             }
@@ -88,8 +88,8 @@
             }
         }
     },
-    "RTMPPushStreamElement": {
-        "type": "RTMPPushStreamElement",
+    "ERtmpSender": {
+        "type": "ERtmpSender",
         "properties": {
             "uri": {
                 "type": "string",

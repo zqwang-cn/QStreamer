@@ -1,7 +1,7 @@
-#include "Models.h"
+#include "MModel.h"
 #include "utils.h"
 
-Model::Model(std::string config_file)
+MModel::MModel(std::string config_file)
 {
     // set base path
     base = std::filesystem::path(config_file);
@@ -50,12 +50,12 @@ Model::Model(std::string config_file)
     std = cv::Scalar(rgb[0], rgb[1], rgb[2]);
 }
 
-Model::~Model()
+MModel::~MModel()
 {
     delete runtime;
 }
 
-void Model::copy_data(void *src_buf, void *dst_buf, int width, int height, int n_channels)
+void MModel::copy_data(void *src_buf, void *dst_buf, int width, int height, int n_channels)
 {
     float *src = (float *)src_buf;
     float *dst = (float *)dst_buf;
@@ -65,7 +65,7 @@ void Model::copy_data(void *src_buf, void *dst_buf, int width, int height, int n
                 dst[c * height * width + x * width + y] = src[x * width * n_channels + y * n_channels + c];
 }
 
-void Model::preprocess(cv::Mat &image)
+void MModel::preprocess(cv::Mat &image)
 {
     if (keep_aspect_ratio)
     {
@@ -88,23 +88,23 @@ void Model::preprocess(cv::Mat &image)
     cv::merge(channels, image);
 }
 
-void Model::infer(cv::Mat &image)
+void MModel::infer(cv::Mat &image)
 {
     copy_data(image.data, runtime->get_buf(input_binding_index), image.cols, image.rows, image.channels());
     runtime->execute();
 }
 
-const std::string &Model::get_name()
+const std::string &MModel::get_name()
 {
     return name;
 }
 
-int Model::get_input_width()
+int MModel::get_input_width()
 {
     return input_width;
 }
 
-int Model::get_input_height()
+int MModel::get_input_height()
 {
     return input_height;
 }

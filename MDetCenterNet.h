@@ -1,9 +1,9 @@
-#include "Detector.h"
+#include "MDetector.h"
 
-class CenternetDetector : public Detector
+class MDetCenterNet : public MDetector
 {
 public:
-    CenternetDetector(std::string config_file);
+    MDetCenterNet(std::string config_file);
 
 private:
     int hm_binding_index;
@@ -12,5 +12,5 @@ private:
     int reg_binding_index;
     int output_height;
     int output_width;
-    virtual std::vector<DetectorResult> postprocess();
+    virtual std::vector<DetectionResult> postprocess();
 };

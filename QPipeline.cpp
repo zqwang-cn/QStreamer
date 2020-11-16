@@ -1,12 +1,12 @@
-#include "Pipeline.h"
+#include "QPipeline.h"
 #include <assert.h>
 
-Pipeline::Pipeline(Json::Value config)
+QPipeline::QPipeline(Json::Value config)
 {
     auto element_config = config["elements"];
     for (auto name : element_config.getMemberNames())
     {
-        auto element = Element::create_element(element_config[name], this);
+        auto element = QElement::create_element(element_config[name], this);
         _elements.emplace(name, element);
         if (element->n_in_pads() == 0)
             _input_elements.push(element);
@@ -31,13 +31,13 @@ Pipeline::Pipeline(Json::Value config)
     }
 }
 
-Pipeline::~Pipeline()
+QPipeline::~QPipeline()
 {
     for (auto iter = _elements.begin(); iter != _elements.end(); iter++)
         delete iter->second;
 }
 
-void Pipeline::init()
+void QPipeline::init()
 {
     _ready_elements = _input_elements;
     while (!_quit && _ready_elements.size() > 0)
@@ -49,7 +49,7 @@ void Pipeline::init()
     }
 }
 
-void Pipeline::run()
+void QPipeline::run()
 {
     while (!_quit)
     {
@@ -64,18 +64,18 @@ void Pipeline::run()
     }
 }
 
-void Pipeline::stop()
+void QPipeline::stop()
 {
     _quit = true;
 }
 
-void Pipeline::finalize()
+void QPipeline::finalize()
 {
     for (auto iter = _elements.begin(); iter != _elements.end(); iter++)
         iter->second->finalize();
 }
 
-void Pipeline::element_ready(Element* element)
+void QPipeline::element_ready(QElement* element)
 {
     _ready_elements.push(element);
 }
