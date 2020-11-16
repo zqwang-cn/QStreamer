@@ -102,7 +102,12 @@ function add_node(jsPlumb, type, node_name, draggable) {
             var properties = nodes[node_name].properties;
             $("#properties").empty();
             for (var name in properties) {
-                var value = properties[name].value;
+                var property = properties[name];
+                var type = property.type;
+                var value = property.value;
+                if (type == 'json') {
+                    value = JSON.stringify(value);
+                }
                 var id = "p-" + name;
                 var item = `\
                       <div class="form-group">
@@ -140,8 +145,22 @@ function save() {
         return;
 
     var properties = nodes[current_name].properties;
-    for (name in properties) {
-        properties[name].value = $("#p-" + name).val();
+    for (var name in properties) {
+        var property = properties[name];
+        var type = property.type;
+        var value = $("#p-" + name).val();
+        if (type == 'int') {
+            property.value = parseInt(value);
+        }
+        else if (type == 'float') {
+            property.value = parseFloat(value);
+        }
+        else if (type == "json") {
+            property.value = JSON.parse(value);
+        }
+        else {
+            property.value = value;
+        }
     }
 }
 

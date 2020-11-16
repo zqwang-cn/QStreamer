@@ -1,6 +1,7 @@
 #include "QElement.h"
 #include "EDetector.h"
 #include "EDisplayer.h"
+#include "ERegionFilter.h"
 #include "ERenderer.h"
 #include "ERtmpSender.h"
 #include "EVideoCapture.h"
@@ -20,6 +21,8 @@ QElement* QElement::new_element(std::string type)
         return new ERenderer();
     else if (type == "ERtmpSender")
         return new ERtmpSender();
+    else if (type == "ERegionFilter")
+        return new ERegionFilter();
     else
         assert(false);
 }
@@ -41,6 +44,8 @@ QElement* QElement::create_element(Json::Value config, QPipeline* pipeline)
             element->_properties[name] = property["value"].asInt();
         else if (type == "float")
             element->_properties[name] = property["value"].asFloat();
+        else if (type == "json")
+            element->_properties[name] = property["value"];
         else
             assert(false);
     }

@@ -105,5 +105,32 @@
             }
         },
         "out_pads": {}
+    },
+    "ERegionFilter": {
+        "type": "ERegionFilter",
+        "properties": {
+            "polygons": {
+                "type": "json",
+                "value": [
+                    []
+                ]
+            }
+        },
+        "in_pads": {
+            "in": {
+                "det_results": {
+                    "type": "std::list<DetectionResult>",
+                    "size": 1
+                }
+            }
+        },
+        "out_pads": {
+            "out": {
+                "det_results": {
+                    "type": "std::list<DetectionResult>",
+                    "size": 1
+                }
+            }
+        }
     }
 }
