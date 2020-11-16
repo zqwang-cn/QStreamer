@@ -1,4 +1,4 @@
-import elements from "./elements.json"
+import elements from "../../elements.json"
 import $ from "jquery"
 import jsPlumb from "jsplumb"
 
