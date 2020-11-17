@@ -1,4 +1,5 @@
 #include "QElement.h"
+#include "EClassifier.h"
 #include "EDetector.h"
 #include "EDisplayer.h"
 #include "ERegionFilter.h"
@@ -17,6 +18,8 @@ QElement* QElement::new_element(std::string type)
         return new EDisplayer();
     else if (type == "EDetector")
         return new EDetector();
+    else if (type == "EClassifier")
+        return new EClassifier();
     else if (type == "ERenderer")
         return new ERenderer();
     else if (type == "ERtmpSender")

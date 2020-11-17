@@ -57,8 +57,41 @@
                     "type": "Mat",
                     "size": 1
                 },
-                "det_results": {
-                    "type": "std::list<DetectionResult>",
+                "objects": {
+                    "type": "std::list<EObjectInfo>",
+                    "size": 1
+                }
+            }
+        }
+    },
+    "EClassifier": {
+        "type": "EClassifier",
+        "properties": {
+            "config_file": {
+                "type": "string",
+                "value": ""
+            }
+        },
+        "in_pads": {
+            "in": {
+                "image": {
+                    "type": "Mat",
+                    "size": 1
+                },
+                "objects": {
+                    "type": "std::list<EObjectInfo>",
+                    "size": 1
+                }
+            }
+        },
+        "out_pads": {
+            "out": {
+                "image": {
+                    "type": "Mat",
+                    "size": 1
+                },
+                "objects": {
+                    "type": "std::list<EObjectInfo>",
                     "size": 1
                 }
             }
@@ -73,8 +106,8 @@
                     "type": "Mat",
                     "size": 1
                 },
-                "det_results": {
-                    "type": "std::list<DetectionResult>",
+                "objects": {
+                    "type": "std::list<EObjectInfo>",
                     "size": 1
                 }
             }
@@ -118,16 +151,16 @@
         },
         "in_pads": {
             "in": {
-                "det_results": {
-                    "type": "std::list<DetectionResult>",
+                "objects": {
+                    "type": "std::list<EObjectInfo>",
                     "size": 1
                 }
             }
         },
         "out_pads": {
             "out": {
-                "det_results": {
-                    "type": "std::list<DetectionResult>",
+                "objects": {
+                    "type": "std::list<EObjectInfo>",
                     "size": 1
                 }
             }

@@ -1,8 +1,8 @@
 #pragma once
-#include "MDetector.h"
+#include "MClassifier.h"
 #include "QElement.h"
 
-class EDetector : public QElement
+class EClassifier : public QElement
 {
 public:
     virtual void init(const std::map<std::string, std::any>& properties, const std::map<std::string, QInPad*>& in_pads, const std::map<std::string, QOutPad*>& out_pads);
@@ -10,6 +10,7 @@ public:
     virtual void finalize();
 
 private:
-    MDetector* detector;
+    MClassifier* classifier;
+    std::string name;
     std::vector<std::string> labels;
 };

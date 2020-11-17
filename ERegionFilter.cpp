@@ -1,5 +1,5 @@
 #include "ERegionFilter.h"
-#include "MDetector.h"
+#include "EStructures.h"
 
 void ERegionFilter::init(const std::map<std::string, std::any>& properties, const std::map<std::string, QInPad*>& in_pads, const std::map<std::string, QOutPad*>& out_pads)
 {
@@ -32,18 +32,18 @@ void ERegionFilter::init(const std::map<std::string, std::any>& properties, cons
 void ERegionFilter::process(const std::map<std::string, QInPad*>& in_pads, const std::map<std::string, QOutPad*>& out_pads)
 {
     auto buffer = in_pads.at("in")->get_buffer();
-    auto det_results = std::any_cast<std::list<DetectionResult>>(buffer->get_buffer("det_results"));
+    auto objects = std::any_cast<std::list<EObjectInfo>>(buffer->get_buffer("objects"));
 
-    det_results.remove_if([this](DetectionResult& r) {
-        int x = r->bbox.x + r->bbox.width / 2;
-        int y = r->bbox.y + r->bbox.height / 2;
+    objects.remove_if([this](EObjectInfo& obj) {
+        int x = obj.bbox.x + obj.bbox.width / 2;
+        int y = obj.bbox.y + obj.bbox.height / 2;
         if (this->mask.at<uchar>(y, x) == 0)
             return true;
         else
             return false;
     });
 
-    buffer->set_buffer("det_results", det_results);
+    buffer->set_buffer("objects", objects);
     out_pads.at("out")->send_buffer(std::move(buffer));
 }
 
