@@ -9,8 +9,8 @@ void ERenderer::init(const std::map<std::string, std::any>& properties, const st
 void ERenderer::process(const std::map<std::string, QInPad*>& in_pads, const std::map<std::string, QOutPad*>& out_pads)
 {
     auto buffer = in_pads.at("in")->get_buffer();
-    auto image = std::any_cast<cv::Mat>(buffer->get_buffer("image"));
-    auto objects = std::any_cast<std::list<EObjectInfo>>(buffer->get_buffer("objects"));
+    auto image = std::any_cast<cv::Mat>(buffer.get_buffer("image"));
+    auto objects = std::any_cast<std::list<EObjectInfo>>(buffer.get_buffer("objects"));
     for (auto& obj : objects)
     {
         cv::rectangle(image, obj.bbox, cv::Scalar(0, 0, 255));
@@ -28,7 +28,7 @@ void ERenderer::process(const std::map<std::string, QInPad*>& in_pads, const std
             size = cv::getTextSize(text, cv::FONT_HERSHEY_SIMPLEX, 0.5, 1, &baseline);
         }
     }
-    buffer->remove_buffer("objects");
+    buffer.remove_buffer("objects");
     out_pads.at("out")->send_buffer(std::move(buffer));
 }
 

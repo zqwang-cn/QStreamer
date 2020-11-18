@@ -12,7 +12,7 @@ void EDetector::init(const std::map<std::string, std::any>& properties, const st
 void EDetector::process(const std::map<std::string, QInPad*>& in_pads, const std::map<std::string, QOutPad*>& out_pads)
 {
     auto buffer = in_pads.at("in")->get_buffer();
-    auto image = std::any_cast<cv::Mat>(buffer->get_buffer("image"));
+    auto image = std::any_cast<cv::Mat>(buffer.get_buffer("image"));
     auto results = detector->detect(image);
     std::list<EObjectInfo> objects;
     for (auto r : results)
@@ -21,7 +21,7 @@ void EDetector::process(const std::map<std::string, QInPad*>& in_pads, const std
         obj.bbox = r->bbox;
         obj.label = labels[r->category];
     }
-    buffer->set_buffer("objects", objects);
+    buffer.set_buffer("objects", objects);
     out_pads.at("out")->send_buffer(std::move(buffer));
 }
 

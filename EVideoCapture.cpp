@@ -10,8 +10,8 @@ void EVideoCapture::init(const std::map<std::string, std::any>& properties, cons
     input_meta["height"] = int(cap.get(CV_CAP_PROP_FRAME_HEIGHT));
     input_meta["fps"] = int(cap.get(CV_CAP_PROP_FPS));
     input_meta["stride"] = width * 3;
-    QBuffer buffer(new _QBuffer());
-    buffer->set_buffer("input_meta", input_meta);
+    QBuffer buffer;
+    buffer.set_buffer("input_meta", input_meta);
     out_pads.at("out")->send_buffer(std::move(buffer));
 }
 
@@ -23,8 +23,8 @@ void EVideoCapture::process(const std::map<std::string, QInPad*>& in_pads, const
         quit();
         return;
     }
-    QBuffer buffer(new _QBuffer());
-    buffer->set_buffer("image", image);
+    QBuffer buffer;
+    buffer.set_buffer("image", image);
     out_pads.at("out")->send_buffer(std::move(buffer));
 }
 
