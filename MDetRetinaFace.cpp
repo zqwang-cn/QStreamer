@@ -1,5 +1,7 @@
 #include "MDetRetinaFace.h"
 
+MDETECTOR_REGISTER(MDetRetinaFace)
+
 MDetRetinaFace::MDetRetinaFace(std::string config_file) : MDetector(config_file)
 {
     // get configs

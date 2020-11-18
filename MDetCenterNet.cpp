@@ -1,6 +1,8 @@
 #include "MDetCenterNet.h"
 #include "utils.h"
 
+MDETECTOR_REGISTER(MDetCenterNet)
+
 MDetCenterNet::MDetCenterNet(std::string config_file) : MDetector(config_file)
 {
     hm_binding_index = runtime->get_engine()->getBindingIndex(config["hm_binding_name"].asCString());

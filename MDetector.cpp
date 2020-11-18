@@ -1,17 +1,20 @@
 #include "MDetector.h"
-#include "MDetCenterNet.h"
-#include "MDetRetinaFace.h"
+
+static std::unique_ptr<std::map<std::string, std::function<MDetector*(std::string)>>> creators;
+
+void MDetector::register_detector(std::string name, std::function<MDetector*(std::string)> creator)
+{
+    if (creators == nullptr)
+        creators.reset(new std::map<std::string, std::function<MDetector*(std::string)>>);
+    creators->emplace(name, creator);
+}
 
 MDetector* MDetector::create_detector(std::string config_file)
 {
     Json::Value config = load_config_file(config_file);
     std::string type = config["type"].asString();
-    if (type == "MDetRetinaFace")
-        return new MDetRetinaFace(config_file);
-    else if (type == "MDetCenterNet")
-        return new MDetCenterNet(config_file);
-    else
-        assert(false);
+    auto creator = creators->at(type);
+    return creator(config_file);
 }
 
 MDetector::MDetector(std::string config_file) : MModel(config_file)
