@@ -1,33 +1,20 @@
 #include "QElement.h"
-#include "EClassifier.h"
-#include "EDetector.h"
-#include "EDisplayer.h"
-#include "ERegionFilter.h"
-#include "ERenderer.h"
-#include "ERtmpSender.h"
-#include "EVideoCapture.h"
 #include "QPipeline.h"
 #include <assert.h>
-#include <iostream>
+
+static std::unique_ptr<std::map<std::string, std::function<QElement*()>>> creators;
+
+void QElement::register_element(std::string name, std::function<QElement*()> creator)
+{
+    if (creators == nullptr)
+        creators.reset(new std::map<std::string, std::function<QElement*()>>);
+    creators->emplace(name, creator);
+}
 
 QElement* QElement::new_element(std::string type)
 {
-    if (type == "EVideoCapture")
-        return new EVideoCapture();
-    else if (type == "EDisplayer")
-        return new EDisplayer();
-    else if (type == "EDetector")
-        return new EDetector();
-    else if (type == "EClassifier")
-        return new EClassifier();
-    else if (type == "ERenderer")
-        return new ERenderer();
-    else if (type == "ERtmpSender")
-        return new ERtmpSender();
-    else if (type == "ERegionFilter")
-        return new ERegionFilter();
-    else
-        assert(false);
+    auto creator = creators->at(type);
+    return creator();
 }
 
 QElement* QElement::create_element(Json::Value config, QPipeline* pipeline)

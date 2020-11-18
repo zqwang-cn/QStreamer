@@ -1,12 +1,14 @@
 #pragma once
 #include "QPad.h"
 #include "json/json.h"
+#include <functional>
 
 class QPipeline;
 
 class QElement
 {
 public:
+    static void register_element(std::string name, std::function<QElement*()> creator);
     static QElement* new_element(std::string class_name);
     static QElement* create_element(Json::Value config, QPipeline* pipeline);
     ~QElement();
@@ -36,3 +38,17 @@ private:
     std::map<QPad*, bool> _pad_ready;
     void pad_ready(QPad* pad);
 };
+
+class QElementRegistration
+{
+public:
+    QElementRegistration(const std::string name, std::function<QElement*()> creator)
+    {
+        QElement::register_element(name, creator);
+    }
+};
+
+#define QELEMENT_REGISTER(CLASS_NAME)                                  \
+    QElementRegistration CLASS_NAME##_registration(#CLASS_NAME, []() { \
+        return new CLASS_NAME();                                       \
+    });

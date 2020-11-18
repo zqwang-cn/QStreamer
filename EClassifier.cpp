@@ -1,6 +1,8 @@
 #include "EClassifier.h"
 #include "EStructures.h"
 
+QELEMENT_REGISTER(EClassifier)
+
 void EClassifier::init(const std::map<std::string, std::any>& properties, const std::map<std::string, QInPad*>& in_pads, const std::map<std::string, QOutPad*>& out_pads)
 {
     auto config_file = std::any_cast<std::string>(properties.at("config_file"));

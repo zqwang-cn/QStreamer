@@ -1,6 +1,8 @@
 #include "ERtmpSender.h"
 #include <opencv2/opencv.hpp>
 
+QELEMENT_REGISTER(ERtmpSender)
+
 void ERtmpSender::init(const std::map<std::string, std::any>& properties, const std::map<std::string, QInPad*>& in_pads, const std::map<std::string, QOutPad*>& out_pads)
 {
     auto uri = std::any_cast<std::string>(properties.at("uri"));
