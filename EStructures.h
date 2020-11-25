@@ -6,4 +6,5 @@ struct EObjectInfo
     cv::Rect bbox;
     std::string label;
     std::map<std::string, std::string> properties;
+    std::vector<float> feature;
 };
