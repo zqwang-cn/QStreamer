@@ -20,7 +20,7 @@ void ERenderer::process(const std::map<std::string, QInPad*>& in_pads, const std
         int baseline;
         auto size = cv::getTextSize(obj.label, cv::FONT_HERSHEY_SIMPLEX, 0.5, 1, &baseline);
         int top = size.height;
-        cv::putText(image, obj.label, cv::Point(obj.bbox.x, obj.bbox.y + top), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 255, 0));
+        cv::putText(image, obj.label + " " + std::to_string(obj.id), cv::Point(obj.bbox.x, obj.bbox.y + top), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 255, 0));
 
         for (auto& item : obj.properties)
         {

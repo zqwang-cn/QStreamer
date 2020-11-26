@@ -165,5 +165,75 @@
                 }
             }
         }
+    },
+    "EFeatureExtractor": {
+        "type": "EFeatureExtractor",
+        "properties": {
+            "config_file": {
+                "type": "string",
+                "value": ""
+            }
+        },
+        "in_pads": {
+            "in": {
+                "objects": {
+                    "type": "std::list<EObjectInfo>",
+                    "size": 1
+                }
+            }
+        },
+        "out_pads": {
+            "out": {
+                "objects": {
+                    "type": "std::list<EObjectInfo>",
+                    "size": 1
+                }
+            }
+        }
+    },
+    "EDeepsort": {
+        "type": "EDeepsort",
+        "properties": {
+            "n_init": {
+                "type": "int",
+                "value": 3
+            },
+            "max_age": {
+                "type": "int",
+                "value": 30
+            },
+            "feature_metric": {
+                "type": "string",
+                "value": "cosine"
+            },
+            "feature_th": {
+                "type": "float",
+                "value": 0.2
+            },
+            "iou_metric": {
+                "type": "string",
+                "value": "iou"
+            },
+            "iou_th": {
+                "type": "float",
+                "value": 0.5
+            }
+        },
+        "in_pads": {
+            "in": {
+                "objects": {
+                    "type": "std::list<EObjectInfo>",
+                    "size": 1
+                }
+            }
+        },
+        "out_pads": {
+            "out": {
+                "objects": {
+                    "type": "std::list<EObjectInfo>",
+                    "size": 1
+                }
+            }
+        }
     }
 }
