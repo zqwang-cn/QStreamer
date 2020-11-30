@@ -32,6 +32,7 @@ std::list<DetectionResult> MDetector::detect(const cv::Mat& image)
     preprocess(copy);
     infer(copy);
     std::list<DetectionResult> objects = postprocess();
+    filter(objects);
     return objects;
 }
 
@@ -43,4 +44,11 @@ const std::vector<std::string>& MDetector::get_labels()
 int MDetector::get_n_categories()
 {
     return n_categories;
+}
+
+void MDetector::filter(std::list<DetectionResult>& objects)
+{
+    objects.remove_if([this](DetectionResult& obj) {
+        return (obj->bbox.width < this->min_width || obj->bbox.height < this->min_height) ? true : false;
+    });
 }

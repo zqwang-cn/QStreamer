@@ -17,7 +17,7 @@ void EDetector::process(const std::map<std::string, QInPad*>& in_pads, const std
     auto image = std::any_cast<cv::Mat>(buffer.get_buffer("image"));
     auto results = detector->detect(image);
     std::list<EObjectInfo> objects;
-    for (auto r : results)
+    for (auto& r : results)
     {
         auto& obj = objects.emplace_back();
         obj.bbox = r->bbox;

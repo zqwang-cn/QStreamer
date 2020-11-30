@@ -105,8 +105,6 @@ std::list<DetectionResult> MDetRetinaFace::postprocess()
     {
         DetectionResultWithLandmarksStruct* obj = new DetectionResultWithLandmarksStruct();
         obj->bbox = bbox_float2int(rect_src[index], padded_width, padded_height, origin_width, origin_height);
-        if (obj->bbox.width < min_width || obj->bbox.height < min_height)
-            continue;
         obj->score = scores_src[index];
         obj->category = 0;
         int origin_index = origin_indices[index];

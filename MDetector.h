@@ -36,6 +36,7 @@ protected:
 
 private:
     virtual std::list<DetectionResult> postprocess() = 0;
+    void filter(std::list<DetectionResult>& objects);
     std::vector<std::string> labels;
 };
 
