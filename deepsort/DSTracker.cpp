@@ -82,9 +82,12 @@ std::list<std::pair<DSTrack, DSDetection>> match_feature(std::list<DSTrack>& tra
             return false;
         });
 
-        // return if no tracks left
+        // return if no tracks left, else continue
         if (current_tracks.size() == 0)
-            break;
+            if (tracks.size() == 0)
+                break;
+            else
+                continue;
 
         // perform matching
         auto current_matches = match_by_metric(current_tracks, detections, metric, th);

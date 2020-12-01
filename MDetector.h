@@ -16,6 +16,11 @@ struct DetectionResultWithLandmarksStruct : DetectionResultStruct
     std::vector<cv::Point> landmarks;
 };
 
+struct DetectionResultWithFeatureStruct : DetectionResultStruct
+{
+    std::vector<float> feature;
+};
+
 using DetectionResult = std::shared_ptr<DetectionResultStruct>;
 
 class MDetector : public MModel
