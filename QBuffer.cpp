@@ -10,23 +10,18 @@ QBuffer::QBuffer(QBuffer&& buffer)
     _data = std::move(buffer._data);
 }
 
-std::any QBuffer::get_buffer(std::string name)
-{
-    return _data.at(name);
-}
-
 QBuffer& QBuffer::operator=(QBuffer&& buffer)
 {
     _data = std::move(buffer._data);
     return *this;
 }
 
-void QBuffer::set_buffer(std::string name, std::any buffer)
+std::any& QBuffer::operator[](const std::string& name)
 {
-    _data[name] = buffer;
+    return _data[name];
 }
 
-void QBuffer::remove_buffer(std::string name)
+void QBuffer::erase(const std::string& name)
 {
     _data.erase(name);
 }

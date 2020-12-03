@@ -3,16 +3,16 @@
 
 QELEMENT_REGISTER(ERenderer)
 
-void ERenderer::init(const std::map<std::string, std::any>& properties, const std::map<std::string, QInPad*>& in_pads, const std::map<std::string, QOutPad*>& out_pads)
+void ERenderer::init(const QMap<std::any>& properties, const QMap<QInPad*>& in_pads, const QMap<QOutPad*>& out_pads)
 {
-    out_pads.at("out")->send_buffer(in_pads.at("in")->get_buffer());
+    out_pads["out"]->send_buffer(in_pads["in"]->get_buffer());
 }
 
-void ERenderer::process(const std::map<std::string, QInPad*>& in_pads, const std::map<std::string, QOutPad*>& out_pads)
+void ERenderer::process(const QMap<QInPad*>& in_pads, const QMap<QOutPad*>& out_pads)
 {
-    auto buffer = in_pads.at("in")->get_buffer();
-    auto image = std::any_cast<cv::Mat>(buffer.get_buffer("image"));
-    auto objects = std::any_cast<std::list<EObjectInfo>>(buffer.get_buffer("objects"));
+    auto buffer = in_pads["in"]->get_buffer();
+    auto image = std::any_cast<cv::Mat>(buffer["image"]);
+    auto objects = std::any_cast<std::list<EObjectInfo>>(buffer["objects"]);
     for (auto& obj : objects)
     {
         cv::rectangle(image, obj.bbox, cv::Scalar(0, 0, 255));
@@ -30,8 +30,8 @@ void ERenderer::process(const std::map<std::string, QInPad*>& in_pads, const std
             size = cv::getTextSize(text, cv::FONT_HERSHEY_SIMPLEX, 0.5, 1, &baseline);
         }
     }
-    buffer.remove_buffer("objects");
-    out_pads.at("out")->send_buffer(std::move(buffer));
+    buffer.erase("objects");
+    out_pads["out"]->send_buffer(std::move(buffer));
 }
 
 void ERenderer::finalize()

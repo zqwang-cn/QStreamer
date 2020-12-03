@@ -1,4 +1,4 @@
-import os
+import subprocess
 from flask import Flask, request, redirect, render_template
 
 app = Flask(import_name=__name__,
@@ -17,7 +17,7 @@ def save():
     config = request.get_data()
     with open('config.json', 'w') as f:
         f.write(config.decode('utf8'))
-    os.popen('build/main config.json')
+    subprocess.Popen(['build/main', 'config.json'])
     return 'success'
 
 

@@ -6,10 +6,10 @@ class QElement;
 class QPad
 {
 public:
-    QPad(QElement* element);
     void link(QPad* pad);
 
 protected:
+    QPad(QElement* element);
     QElement* _element;
     QPad* _other_pad;
 };

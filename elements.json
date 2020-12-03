@@ -64,6 +64,35 @@
             }
         }
     },
+    "EDetectorWithFeature": {
+        "type": "EDetectorWithFeature",
+        "properties": {
+            "config_file": {
+                "type": "string",
+                "value": ""
+            }
+        },
+        "in_pads": {
+            "in": {
+                "image": {
+                    "type": "Mat",
+                    "size": 1
+                }
+            }
+        },
+        "out_pads": {
+            "out": {
+                "image": {
+                    "type": "Mat",
+                    "size": 1
+                },
+                "objects": {
+                    "type": "std::list<EObjectInfo>",
+                    "size": 1
+                }
+            }
+        }
+    },
     "EClassifier": {
         "type": "EClassifier",
         "properties": {

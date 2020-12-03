@@ -1,4 +1,5 @@
 #pragma once
+#include "QMap.h"
 #include "QPad.h"
 #include "json/json.h"
 #include <functional>
@@ -15,14 +16,14 @@ public:
 
     QPad* get_in_pad(std::string name);
     QPad* get_out_pad(std::string name);
-    int n_in_pads();
-    int n_out_pads();
+    size_t n_in_pads();
+    size_t n_out_pads();
 
     void init();
     void process();
     void unready();
-    virtual void init(const std::map<std::string, std::any>& properties, const std::map<std::string, QInPad*>& in_pads, const std::map<std::string, QOutPad*>& out_pads) = 0;
-    virtual void process(const std::map<std::string, QInPad*>& in_pads, const std::map<std::string, QOutPad*>& out_pads) = 0;
+    virtual void init(const QMap<std::any>& properties, const QMap<QInPad*>& in_pads, const QMap<QOutPad*>& out_pads) = 0;
+    virtual void process(const QMap<QInPad*>& in_pads, const QMap<QOutPad*>& out_pads) = 0;
     virtual void finalize() = 0;
 
     friend class QInPad;
@@ -32,9 +33,9 @@ protected:
 
 private:
     QPipeline* _pipeline;
-    std::map<std::string, std::any> _properties;
-    std::map<std::string, QInPad*> _in_pads;
-    std::map<std::string, QOutPad*> _out_pads;
+    QMap<std::any> _properties;
+    QMap<QInPad*> _in_pads;
+    QMap<QOutPad*> _out_pads;
     std::map<QPad*, bool> _pad_ready;
     void pad_ready(QPad* pad);
 };
