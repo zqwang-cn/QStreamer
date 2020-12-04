@@ -1,5 +1,5 @@
 #pragma once
-#include "QElement.h"
+#include "../qstreamer/QElement.h"
 
 class ERenderer : public QElement
 {

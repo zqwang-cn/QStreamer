@@ -1,6 +1,6 @@
 #include "EDeepsort.h"
 #include "EStructures.h"
-#include "deepsort/DSMetrics.h"
+#include "../deepsort/DSMetrics.h"
 
 QELEMENT_REGISTER(EDeepsort)
 

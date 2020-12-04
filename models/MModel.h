@@ -1,8 +1,8 @@
 #pragma once
 #include <opencv2/opencv.hpp>
 #include <filesystem>
-#include "json/json.h"
-#include "TRTRuntime.h"
+#include "../utils/json/json.h"
+#include "../utils/TRTRuntime.h"
 
 class MModel
 {

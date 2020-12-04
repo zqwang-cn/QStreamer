@@ -1,8 +1,8 @@
 #pragma once
-#include "QElement.h"
-#include <opencv2/opencv.hpp>
+#include "../qstreamer/QElement.h"
+#include "../utils/RTMPSender.h"
 
-class ERegionFilter : public QElement
+class ERtmpSender : public QElement
 {
 public:
     virtual void init(const QMap<std::any>& properties, const QMap<QInPad*>& in_pads, const QMap<QOutPad*>& out_pads);
@@ -10,5 +10,5 @@ public:
     virtual void finalize();
 
 private:
-    cv::Mat mask;
+    RTMPSender* sender;
 };

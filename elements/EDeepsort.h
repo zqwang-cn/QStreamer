@@ -1,8 +1,8 @@
 #pragma once
-#include "MFeatureExtractor.h"
-#include "QElement.h"
+#include "../qstreamer/QElement.h"
+#include "../deepsort/DSTracker.h"
 
-class EFeatureExtractor : public QElement
+class EDeepsort : public QElement
 {
 public:
     virtual void init(const QMap<std::any>& properties, const QMap<QInPad*>& in_pads, const QMap<QOutPad*>& out_pads);
@@ -10,5 +10,5 @@ public:
     virtual void finalize();
 
 private:
-    MFeatureExtractor<float>* extractor;
+    DSTracker* tracker;
 };

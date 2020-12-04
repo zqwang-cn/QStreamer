@@ -1,8 +1,8 @@
 #pragma once
-#include "MClassifier.h"
-#include "QElement.h"
+#include "../models/MFeatureExtractor.h"
+#include "../qstreamer/QElement.h"
 
-class EClassifier : public QElement
+class EFeatureExtractor : public QElement
 {
 public:
     virtual void init(const QMap<std::any>& properties, const QMap<QInPad*>& in_pads, const QMap<QOutPad*>& out_pads);
@@ -10,7 +10,5 @@ public:
     virtual void finalize();
 
 private:
-    MClassifier* classifier;
-    std::string name;
-    std::vector<std::string> labels;
+    MFeatureExtractor<float>* extractor;
 };

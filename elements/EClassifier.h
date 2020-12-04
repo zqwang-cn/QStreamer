@@ -1,7 +1,8 @@
 #pragma once
-#include "QElement.h"
+#include "../models/MClassifier.h"
+#include "../qstreamer/QElement.h"
 
-class EDisplayer : public QElement
+class EClassifier : public QElement
 {
 public:
     virtual void init(const QMap<std::any>& properties, const QMap<QInPad*>& in_pads, const QMap<QOutPad*>& out_pads);
@@ -9,5 +10,7 @@ public:
     virtual void finalize();
 
 private:
-    std::string title;
+    MClassifier* classifier;
+    std::string name;
+    std::vector<std::string> labels;
 };

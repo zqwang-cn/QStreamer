@@ -1,5 +1,5 @@
-#include "QPipeline.h"
-#include "utils.h"
+#include "qstreamer/QPipeline.h"
+#include "utils/utils.h"
 #include <signal.h>
 
 QPipeline* p;

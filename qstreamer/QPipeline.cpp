@@ -7,7 +7,7 @@ QPipeline::QPipeline(Json::Value config)
     for (auto name : element_config.getMemberNames())
     {
         auto element = QElement::create_element(element_config[name], this);
-        _elements.emplace(name, element);
+        _elements.set(name, element);
         if (element->n_in_pads() == 0)
             _input_elements.push(element);
     }
@@ -17,13 +17,13 @@ QPipeline::QPipeline(Json::Value config)
         auto from = link_config["from"];
         auto from_ele_name = from["element_name"].asString();
         auto from_pad_name = from["pad_name"].asString();
-        auto from_ele = _elements.at(from_ele_name);
+        auto from_ele = _elements[from_ele_name];
         auto from_pad = from_ele->get_out_pad(from_pad_name);
 
         auto to = link_config["to"];
         auto to_ele_name = to["element_name"].asString();
         auto to_pad_name = to["pad_name"].asString();
-        auto to_ele = _elements.at(to_ele_name);
+        auto to_ele = _elements[to_ele_name];
         auto to_pad = to_ele->get_in_pad(to_pad_name);
 
         from_pad->link(to_pad);
@@ -33,8 +33,9 @@ QPipeline::QPipeline(Json::Value config)
 
 QPipeline::~QPipeline()
 {
-    for (auto iter = _elements.begin(); iter != _elements.end(); iter++)
-        delete iter->second;
+    _elements.for_each([](QElement* element) {
+        delete element;
+    });
 }
 
 void QPipeline::init()
@@ -71,8 +72,9 @@ void QPipeline::stop()
 
 void QPipeline::finalize()
 {
-    for (auto iter = _elements.begin(); iter != _elements.end(); iter++)
-        iter->second->finalize();
+    _elements.for_each([](QElement* element) {
+        element->finalize();
+    });
 }
 
 void QPipeline::element_ready(QElement* element)

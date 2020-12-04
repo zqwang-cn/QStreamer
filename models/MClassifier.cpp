@@ -1,5 +1,5 @@
 #include "MClassifier.h"
-#include "utils.h"
+#include "../utils/utils.h"
 
 MClassifier::MClassifier(std::string config_file) : MModel(config_file)
 {

@@ -1,5 +1,5 @@
 #include "MModel.h"
-#include "utils.h"
+#include "../utils/utils.h"
 
 MModel::MModel(std::string config_file)
 {

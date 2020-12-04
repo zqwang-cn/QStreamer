@@ -1,8 +1,8 @@
 #pragma once
-#include "QElement.h"
-#include "deepsort/DSTracker.h"
+#include "../qstreamer/QElement.h"
+#include <opencv2/opencv.hpp>
 
-class EDeepsort : public QElement
+class EVideoCapture : public QElement
 {
 public:
     virtual void init(const QMap<std::any>& properties, const QMap<QInPad*>& in_pads, const QMap<QOutPad*>& out_pads);
@@ -10,5 +10,5 @@ public:
     virtual void finalize();
 
 private:
-    DSTracker* tracker;
+    cv::VideoCapture cap;
 };

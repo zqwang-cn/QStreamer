@@ -14,7 +14,7 @@ public:
 
 private:
     bool _quit = false;
-    std::map<std::string, QElement*> _elements;
+    QMap<QElement*> _elements;
     std::queue<QElement*> _input_elements;
     std::queue<QElement*> _ready_elements;
     void element_ready(QElement* element);

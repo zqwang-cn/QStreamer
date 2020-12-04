@@ -1,6 +1,6 @@
 #pragma once
-#include "MDetector.h"
-#include "QElement.h"
+#include "../models/MDetector.h"
+#include "../qstreamer/QElement.h"
 
 class EDetector : public QElement
 {

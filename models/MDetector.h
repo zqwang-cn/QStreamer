@@ -1,6 +1,6 @@
 #pragma once
 #include "MModel.h"
-#include "utils.h"
+#include "../utils/utils.h"
 #include <functional>
 
 struct DetectionResultStruct
