@@ -168,6 +168,28 @@
         },
         "out_pads": {}
     },
+    "EVideoWriter": {
+        "type": "EVideoWriter",
+        "properties": {
+            "uri": {
+                "type": "string",
+                "value": ""
+            },
+            "fourcc": {
+                "type": "string",
+                "value": "mp4v"
+            }
+        },
+        "in_pads": {
+            "in": {
+                "image": {
+                    "type": "Mat",
+                    "size": 1
+                }
+            }
+        },
+        "out_pads": {}
+    },
     "ERegionFilter": {
         "type": "ERegionFilter",
         "properties": {
