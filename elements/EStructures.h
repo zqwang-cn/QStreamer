@@ -3,6 +3,7 @@
 struct EObjectInfo
 {
     uint id;
+    float score;
     cv::Rect bbox;
     std::string label;
     std::map<std::string, std::string> properties;

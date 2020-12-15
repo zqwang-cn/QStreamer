@@ -21,6 +21,7 @@ void EDetector::process(const QMap<QInPad*>& in_pads, const QMap<QOutPad*>& out_
     {
         auto& obj = objects.emplace_back();
         obj.bbox = r->bbox;
+        obj.score = r->score;
         obj.label = labels[r->category];
     }
     buffer["objects"] = objects;
