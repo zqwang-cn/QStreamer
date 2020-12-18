@@ -15,7 +15,7 @@ MClassifier::MClassifier(std::string config_file) : MModel(config_file)
     assert(n_categories == labels.size());
 }
 
-int MClassifier::classify(const cv::Mat object)
+int MClassifier::classify(const cv::Mat& object)
 {
     cv::Mat copy = object.clone();
     preprocess(copy);

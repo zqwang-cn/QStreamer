@@ -23,6 +23,10 @@
             "title": {
                 "type": "string",
                 "value": "image"
+            },
+            "wait_time": {
+                "type": "int",
+                "value": 1
             }
         },
         "in_pads": {

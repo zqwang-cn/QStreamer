@@ -55,22 +55,22 @@ MModel::~MModel()
     delete runtime;
 }
 
-void MModel::copy_data(void *src_buf, void *dst_buf, int width, int height, int n_channels)
+void MModel::copy_data(void* src_buf, void* dst_buf, int width, int height, int n_channels)
 {
-    float *src = (float *)src_buf;
-    float *dst = (float *)dst_buf;
+    float* src = (float*)src_buf;
+    float* dst = (float*)dst_buf;
     for (int c = 0; c < n_channels; c++)
         for (int x = 0; x < height; x++)
             for (int y = 0; y < width; y++)
                 dst[c * height * width + x * width + y] = src[x * width * n_channels + y * n_channels + c];
 }
 
-void MModel::preprocess(cv::Mat &image)
+void MModel::preprocess(cv::Mat& image)
 {
+    origin_width = image.cols;
+    origin_height = image.rows;
     if (keep_aspect_ratio)
     {
-        origin_width = image.cols;
-        origin_height = image.rows;
         std::pair<int, int> size = resize_keeping_aspect_ratio(image, image, cv::Size(input_width, input_height));
         padded_width = size.first;
         padded_height = size.second;
@@ -88,13 +88,13 @@ void MModel::preprocess(cv::Mat &image)
     cv::merge(channels, image);
 }
 
-void MModel::infer(cv::Mat &image)
+void MModel::infer(cv::Mat& image)
 {
     copy_data(image.data, runtime->get_buf(input_binding_index), image.cols, image.rows, image.channels());
     runtime->execute();
 }
 
-const std::string &MModel::get_name()
+const std::string& MModel::get_name()
 {
     return name;
 }

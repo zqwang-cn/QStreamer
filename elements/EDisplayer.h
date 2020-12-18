@@ -10,4 +10,5 @@ public:
 
 private:
     std::string title;
+    int wait_time;
 };

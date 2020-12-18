@@ -1,7 +1,12 @@
 #container-ele{
   border: 1px solid gray;
+  height: 800px;
+  overflow-y: scroll;
 }
 #container-con{
+  border: 1px solid gray;
+}
+#container-prop{
   border: 1px solid gray;
 }
 

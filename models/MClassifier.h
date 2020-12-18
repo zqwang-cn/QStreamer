@@ -5,7 +5,7 @@ class MClassifier : public MModel
 {
 public:
     MClassifier(std::string config_file);
-    int classify(const cv::Mat object);
+    int classify(const cv::Mat& object);
     const std::vector<std::string>& get_labels();
 
 protected:

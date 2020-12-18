@@ -16,7 +16,7 @@ public:
 private:
     std::list<DSTrack> _tracks;
 
-    uint _next_id = 0;
+    uint _next_id = 1;
     int _n_init;
     int _max_age;
 

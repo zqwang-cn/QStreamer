@@ -1,6 +1,6 @@
 #include "EDeepsort.h"
-#include "EStructures.h"
 #include "../deepsort/DSMetrics.h"
+#include "EStructures.h"
 
 QELEMENT_REGISTER(EDeepsort)
 
@@ -30,7 +30,10 @@ void EDeepsort::process(const QMap<QInPad*>& in_pads, const QMap<QOutPad*>& out_
     auto obj_iter = objects.begin();
     auto det_iter = detections.begin();
     for (; obj_iter != objects.end(); obj_iter++, det_iter++)
+    {
         obj_iter->id = (*det_iter)->id;
+        obj_iter->label += " " + std::to_string(obj_iter->id);
+    }
 
     buffer["objects"] = objects;
     out_pads["out"]->send_buffer(std::move(buffer));

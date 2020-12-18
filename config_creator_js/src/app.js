@@ -114,7 +114,7 @@ function add_node(jsPlumb, type, node_name, draggable) {
                         <label>
                           ${name}
                         </label>
-                        <input type="text" class="form-control" id="${id}" value=${value}>
+                        <textarea class="form-control" id="${id}">${value}</textarea>
                       </div>`
                 $("#properties").append(item);
             }
