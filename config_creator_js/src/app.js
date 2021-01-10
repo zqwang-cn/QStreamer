@@ -37,8 +37,10 @@ var current_name;
 function add_node(jsPlumb, type, node_name, draggable) {
     var node_id = "n-" + node_name;
     var node_html = `<div>
-                       <div class="node-label">${node_name}</div>
                        <div class="node-inner" id="${node_id}">
+                          <span class="node-title">${node_name}</span>
+                          <span class="node-insection">In</span>
+                          <span class="node-outsection">Out</span>
                        </div>
                      </div>`
     var node = $(node_html);
