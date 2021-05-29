@@ -83,8 +83,8 @@ class ConfigWidget(QWidget):
         self.set_property_button = QPushButton('set', self)
         self.set_property_button.clicked.connect(self.set_property_button_clicked)
 
-        self.export_button = QPushButton('export', self)
-        self.export_button.clicked.connect(self.export_button_clicked)
+        self.run_button = QPushButton('run', self)
+        self.run_button.clicked.connect(self.run_button_clicked)
 
         self.preview_label = QLabel('preview', self)
 
@@ -102,11 +102,11 @@ class ConfigWidget(QWidget):
         layout.addWidget(self.property_list, 2, 1)
         layout.addWidget(self.property_edit, 2, 2)
         layout.addWidget(self.set_property_button, 2, 3)
-        layout.addWidget(self.export_button, 2, 4)
+        layout.addWidget(self.run_button, 2, 4)
         layout.addWidget(self.preview_label, 3, 0, 1, 5)
         self.setLayout(layout)
 
-        for name, _ in defs.items():
+        for name in defs:
             self.def_list.addItem(name)
         self.refresh()
 
@@ -119,14 +119,14 @@ class ConfigWidget(QWidget):
         if self.fr_ele_list.currentIndex() == -1:
             return
         self.fr_pad_list.clear()
-        for pad_name, _ in config['elements'][self.fr_ele_list.currentText()]['out_pads'].items():
+        for pad_name in config['elements'][self.fr_ele_list.currentText()]['out_pads']:
             self.fr_pad_list.addItem(pad_name)
 
     def to_ele_list_text_changed(self):
         if self.to_ele_list.currentIndex() == -1:
             return
         self.to_pad_list.clear()
-        for pad_name, _ in config['elements'][self.to_ele_list.currentText()]['in_pads'].items():
+        for pad_name in config['elements'][self.to_ele_list.currentText()]['in_pads']:
             self.to_pad_list.addItem(pad_name)
 
     def ele_list_text_changed(self):
@@ -134,14 +134,12 @@ class ConfigWidget(QWidget):
             return
         self.property_list.clear()
         for property in config['elements'][self.ele_list.currentText()]['properties']:
-            self.property_list.addItem(property['name'])
+            self.property_list.addItem(property)
 
     def property_list_text_changed(self):
-        for property in config['elements'][self.ele_list.currentText()]['properties']:
-            if property['name'] == self.property_list.currentText():
-                self.property_edit.setText(property['value'])
-                return
-        self.property_edit.setText('')
+        if self.property_list.currentIndex() == -1:
+            return
+        self.property_edit.setText(str(config['elements'][self.ele_list.currentText()]['properties'][self.property_list.currentText()]['value']))
 
     def add_button_clicked(self):
         name = self.ele_name_edit.text()
@@ -167,15 +165,20 @@ class ConfigWidget(QWidget):
         self.preview()
 
     def set_property_button_clicked(self):
-        name = self.ele_list.currentText()
-        for property in config['elements'][name]['properties']:
-            if property['name'] == self.property_list.currentText():
-                property['value'] = self.property_edit.text()
-                return
+        type = config['elements'][self.ele_list.currentText()]['properties'][self.property_list.currentText()]['type']
+        if type == 'string':
+            value = self.property_edit.text()
+        elif type == 'int':
+            value = int(self.property_edit.text())
+        else:
+            value = self.property_edit.text()
+        config['elements'][self.ele_list.currentText()]['properties'][self.property_list.currentText()]['value'] = value
 
-    def export_button_clicked(self):
+    def run_button_clicked(self):
         with open('config.json', 'w') as f:
             json.dump(config, f, indent=4)
+
+        os.system('build/main config.json')
 
     def preview(self):
         render(config)
@@ -185,7 +188,7 @@ class ConfigWidget(QWidget):
         self.fr_ele_list.clear()
         self.to_ele_list.clear()
         self.ele_list.clear()
-        for name, _ in config['elements'].items():
+        for name in config['elements']:
             self.fr_ele_list.addItem(name)
             self.to_ele_list.addItem(name)
             self.ele_list.addItem(name)
