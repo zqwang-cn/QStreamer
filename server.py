@@ -23,7 +23,8 @@ def save():
 
 @app.route("/play")
 def play():
-    return render_template('player.html', uri=request.args.get('uri'))
+    uri = request.args.get('uri').replace('rtmp://', 'http://') + '.m3u8'
+    return render_template('player.html', uri=uri)
 
 
 if __name__ == '__main__':

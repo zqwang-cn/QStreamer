@@ -14,24 +14,30 @@
 
 <body>
   <div class="container-fluid">
-    <div class="row" style="height: 800px;">
-      <div class="col-md-3" id="container-ele">
+    <h1 style="margin-top: 20px;text-align: center;">
+      QStreamer config creator
+    </h1>
+    <div class="row">
+      <div class="col-md-2" id="container-ele">
+        <h5 style="margin-top: 20px;text-align: center;">
+          All elements
+        </h5>
       </div>
-      <div class="col-md-6" id="container-con">
+      <div class="col-md-8" id="container-con">
       </div>
-      <div class="col-md-3" id="container-prop">
-        <h5 style="margin-top: 20px;">
-          属性设置
+      <div class="col-md-2" id="container-prop">
+        <h5 style="margin-top: 20px;text-align: center;">
+          Properties
         </h5>
         <form role="form">
           <div id="properties">
           </div>
           <button type="button" class="btn btn-primary" id="save">
-            保存属性
+            Save
           </button>
         </form>
-        <button type="button" class="btn btn-success" id="export" style="bottom: 0; right: 0; position: absolute;">
-          运行
+        <button type="button" class="btn btn-success" id="export">
+          Run
         </button>
       </div>
     </div>

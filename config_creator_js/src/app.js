@@ -37,10 +37,10 @@ var current_name;
 function add_node(jsPlumb, type, node_name, draggable) {
     var node_id = "n-" + node_name;
     var node_html = `<div>
-                       <div class="node-inner" id="${node_id}">
+                       <div class="node-inner">
                           <span class="node-title">${node_name}</span>
-                          <span class="node-insection">In</span>
-                          <span class="node-outsection">Out</span>
+                          <div class="node-pads" id="${node_id}">
+                          </div>
                        </div>
                      </div>`
     var node = $(node_html);
@@ -58,13 +58,11 @@ function add_node(jsPlumb, type, node_name, draggable) {
     var in_pad_names = Object.keys(in_pads);
     var n_in_pads = in_pad_names.length;
     for (var i = 0; i < n_in_pads; i++) {
+        $("#" + node_id).append($(`<span class="node-insection">${in_pad_names[i]}</span>`));
         var ep = jsPlumb.addEndpoint(node_id, {
             anchor: [0, (1 / (n_in_pads + 1)) * (i + 1), -1, 0],
             isSource: false,
             isTarget: draggable,
-            overlays: [
-                ["Label", { label: in_pad_names[i], location: [-1, 0.5] }]
-            ],
         }, in_endpoint_commons);
         if (draggable) {
             endpoints[ep.id] = {
@@ -73,18 +71,18 @@ function add_node(jsPlumb, type, node_name, draggable) {
             }
         }
     }
+    if (n_in_pads == 0)
+        $("#" + node_id).append($(`<span class="node-insection">&nbsp;</span>`));
 
     var out_pads = element["out_pads"];
     var out_pad_names = Object.keys(out_pads);
     var n_out_pads = out_pad_names.length;
     for (var i = 0; i < n_out_pads; i++) {
+        $("#" + node_id).append($(`<span class="node-outsection">${out_pad_names[i]}</span>`));
         var ep = jsPlumb.addEndpoint(node_id, {
             anchor: [1, (1 / (n_out_pads + 1)) * (i + 1), 1, 0],
             isSource: draggable,
             isTarget: false,
-            overlays: [
-                ["Label", { label: out_pad_names[i], location: [2, 0.5] }]
-            ],
         }, out_endpoint_commons);
         if (draggable) {
             endpoints[ep.id] = {
